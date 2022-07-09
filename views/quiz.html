@@ -1,0 +1,59 @@
+{{define "quiz"}}
+    {{template "header" .}}
+    <body onload="tm()">
+    <p>「家康の康ですよね？」は高専何年生のとき？</p>
+    <input type="button" value="start" onclick="start()">
+    <br>
+    <br>
+    <div id="area1"></div>
+    <div id="area2"></div>
+    <div id="area3"></div>
+    <div id="area4"></div>
+    <script>
+        var answers = ["高専1年", "高専2年", "高専3年", "高専4年"];
+        var CollectAns = "高専2年";
+        var UserAns = "";
+
+        var start = function () {
+            shuffle(answers);
+            var str1 = "<input type='button' value='" + answers[0];
+            str1 += "' onclick='judge(UserAns=\"" + answers[0] + "\")'>";
+            var str2 = "<input type='button' value='" + answers[1];
+            str2 += "' onclick='judge(UserAns=\"" + answers[1] + "\")'>";
+            var str3 = "<input type='button' value='" + answers[2];
+            str3 += "' onclick='judge(UserAns=\"" + answers[2] + "\")'>";
+            var str4 = "<input type='button' value='" + answers[3];
+            str4 += "' onclick='judge(UserAns=\"" + answers[3] + "\")'>";
+            document.getElementById("area1").innerHTML = str1;
+            document.getElementById("area2").innerHTML = str2;
+            document.getElementById("area3").innerHTML = str3;
+            document.getElementById("area4").innerHTML = str4;
+        }
+        var judge = function(UserAns){ 
+            switch (UserAns) {
+                case "":
+                    window.location = "./timeout";
+                    break;
+                case CollectAns:
+                    window.location = "./collect";
+                    break;
+                default:
+                    window.location = "./wrong";
+                    break;
+            }
+        }
+        function tm(){
+            //console.log("huga");
+            //document.write("<p><a href='https://google.com'>hogehoge</a></p>")
+            _ = setTimeout("judge('')", 8000);
+        }
+        function shuffle(arr){
+            for(var i =arr.length-1 ; i>0 ;i--){
+                var j = Math.floor( Math.random() * (i + 1) );  
+                [arr[i],arr[j]]=[arr[j],arr[i]]; 
+            }
+        }
+    </script>
+    </body>
+    {{template "footer" .}}
+{{end}}
