@@ -18,8 +18,26 @@ func (t *Template) Render(w io.Writer, name string, data interface{}, c echo.Con
 
 func getUserName(c echo.Context) error {
 	// TODO: ここらへんDBと連携する
-    id := c.Param("id")
-	return c.Render(http.StatusOK, "quiz", id)
+	QuizData := struct {
+		QuizID string
+		QuizText string
+		QuizAnswer string
+		QuizTimeout string
+		Choice1 string
+		Choice2 string
+		Choice3 string
+		Choice4 string
+	} {
+		c.Param("id"),
+		"「家康の康ですよね？」は高専何年生のとき？",
+		"高専2年",
+		"6000",
+		"高専1年",
+		"高専2年",
+		"高専3年",
+		"高専4年",
+	}
+	return c.Render(http.StatusOK, "quiz", QuizData)
 }
 
 func main() {
@@ -59,14 +77,14 @@ func main() {
 		}
 		return c.Render(http.StatusOK, "home", data)
 	})
-	e.GET("/quiz", func(c echo.Context) error{
-		data := struct {
-			info string
-		} {
-			"quiz",
-		}
-		return c.Render(http.StatusOK, "quiz", data)
-	})
+	//e.GET("/quiz", func(c echo.Context) error{
+		//data := struct {
+			//info string
+		//} {
+			//"quiz",
+		//}
+		//return c.Render(http.StatusOK, "quiz", data)
+	//})
 	e.GET("/collect", func(c echo.Context) error{
 		data := struct {
 			info string
@@ -99,11 +117,6 @@ func main() {
 	g := e.Group("/admin")
 	g.Use(middleware.BasicAuth(func(username, password string, c echo.Context) (bool, error) {
 		if username == "joe" && password == "secret1" {
-			//data := struct {
-				//info string
-			//} {
-				//"admin",
-			//}
 			return true, nil
 		}
 		return false, nil
