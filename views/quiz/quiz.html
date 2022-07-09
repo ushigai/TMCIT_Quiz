@@ -1,17 +1,14 @@
 {{define "quiz"}}
     {{template "header" .}}
-    <body onload="tm()">
-    <p>「家康の康ですよね？」は高専何年生のとき？</p>
-    <input type="button" value="start" onclick="start()">
-    <br>
-    <br>
+    <body onload="start()">
+    <p>{{.QuizText}}</p>
     <div id="area1"></div>
     <div id="area2"></div>
     <div id="area3"></div>
     <div id="area4"></div>
     <script>
-        var answers = ["高専1年", "高専2年", "高専3年", "高専4年"];
-        var CollectAns = "高専2年";
+        var answers = ["{{.Choice1}}", "{{.Choice2}}", "{{.Choice3}}", "{{.Choice4}}"];
+        var CollectAns = "{{.QuizAnswer}}";
         var UserAns = "";
 
         var start = function () {
@@ -28,24 +25,20 @@
             document.getElementById("area2").innerHTML = str2;
             document.getElementById("area3").innerHTML = str3;
             document.getElementById("area4").innerHTML = str4;
+            _ = setTimeout("judge('')", {{ .QuizTimeout }});
         }
         var judge = function(UserAns){ 
             switch (UserAns) {
                 case "":
-                    window.location = "./timeout";
+                    window.location = "/timeout";
                     break;
                 case CollectAns:
-                    window.location = "./collect";
+                    window.location = "/collect";
                     break;
                 default:
-                    window.location = "./wrong";
+                    window.location = "/wrong";
                     break;
             }
-        }
-        function tm(){
-            //console.log("huga");
-            //document.write("<p><a href='https://google.com'>hogehoge</a></p>")
-            _ = setTimeout("judge('')", 8000);
         }
         function shuffle(arr){
             for(var i =arr.length-1 ; i>0 ;i--){
