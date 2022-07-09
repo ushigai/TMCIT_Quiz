@@ -17,9 +17,12 @@ func (t *Template) Render(w io.Writer, name string, data interface{}, c echo.Con
 }
 
 func main() {
-	t := &Template{
-		templates: template.Must(template.ParseGlob("views/*.html")),
-	}
+	tl, err := template.New("t").ParseGlob("views/*.html")
+    tl.ParseGlob("views/common/*.html")
+    tl.ParseGlob("views/quiz/*.html")
+    t := &Template{
+        templates: template.Must(tl, err),
+    }
 
 	e := echo.New()
 
