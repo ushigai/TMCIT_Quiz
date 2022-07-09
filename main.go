@@ -17,9 +17,9 @@ func (t *Template) Render(w io.Writer, name string, data interface{}, c echo.Con
 }
 
 func getUserName(c echo.Context) error {
+	// TODO: ここらへんDBと連携する
     id := c.Param("id")
-    return c.String(http.StatusOK, id)
-    return c.Render(http.StatusOK, "lobby", id)
+	return c.Render(http.StatusOK, "quiz", id)
 }
 
 func main() {
@@ -33,6 +33,7 @@ func main() {
 	e.Renderer = t
 
 	e.GET("/lobby", func(c echo.Context) error{
+		// TODO: ここらへんDBと連携する
 		data := struct {
 			LobbyID string
 			LobbyName string
@@ -95,13 +96,6 @@ func main() {
 		return c.String(http.StatusOK, "Here is root :)")
 	})
 
-	//e.GET("/users/:id", func(c echo.Context) error {
-		//return c.Render(http.StatusOK, "/users/:id")
-	//})
-	//e.GET("/rooms/:RoomNumber", func(c echo.Context) error {
-		//return c.Render(http.StatusOK, "/rooms/:RoomNumber")
-	//})
-	
 	g := e.Group("/admin")
 	g.Use(middleware.BasicAuth(func(username, password string, c echo.Context) (bool, error) {
 		if username == "joe" && password == "secret1" {

@@ -32,13 +32,13 @@
         var judge = function(UserAns){ 
             switch (UserAns) {
                 case "":
-                    window.location = "./timeout";
+                    window.location = "/timeout";
                     break;
                 case CollectAns:
-                    window.location = "./collect";
+                    window.location = "/collect";
                     break;
                 default:
-                    window.location = "./wrong";
+                    window.location = "/wrong";
                     break;
             }
         }
