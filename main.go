@@ -16,27 +16,32 @@ func (t *Template) Render(w io.Writer, name string, data interface{}, c echo.Con
 	return t.templates.ExecuteTemplate(w, name, data)
 }
 
+func getUserName(c echo.Context) error {
+    id := c.Param("id")
+    return c.String(http.StatusOK, id)
+    return c.Render(http.StatusOK, "lobby", id)
+}
+
 func main() {
+	e := echo.New()
 	tl, err := template.New("t").ParseGlob("views/*.html")
     tl.ParseGlob("views/common/*.html")
     tl.ParseGlob("views/quiz/*.html")
     t := &Template{
         templates: template.Must(tl, err),
     }
-
-	e := echo.New()
-
 	e.Renderer = t
 
 	e.GET("/lobby", func(c echo.Context) error{
 		data := struct {
-			info string
+			LobbyID string
+			LobbyName string
 		} {
-			"lobby",
+			"123456789",
+			"1300の歴史",
 		}
 		return c.Render(http.StatusOK, "lobby", data)
 	})
-
 	e.GET("/login", func(c echo.Context) error{
 		data := struct {
 			info string
@@ -85,7 +90,7 @@ func main() {
 		}
 		return c.Render(http.StatusOK, "timeout", data)
 	})
-
+    e.GET("/lobby/:id", getUserName)
 	e.GET("/", func(c echo.Context) error {
 		return c.String(http.StatusOK, "Here is root :)")
 	})
