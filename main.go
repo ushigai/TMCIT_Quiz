@@ -28,8 +28,14 @@ type QuizDataStruct struct {
 	NextQuiz string
 } 
 
+type RoomDataStruct []struct {
+	RoomID string
+	QuizTitle string
+	QuizSubTitle string
+}
 
-func GetQuiz(c echo.Context) error {
+
+func StartQuiz(c echo.Context) error {
 	// TODO: ここらへんDBと連携する
 	QuizData := QuizDataStruct{
 			QuizID: c.Param("id"),
@@ -46,6 +52,30 @@ func GetQuiz(c echo.Context) error {
 	return c.Render(http.StatusOK, "quiz", QuizData)
 }
 
+func GetQuiz(c echo.Context) error {
+	// TODO: ここらへんDBと連携する
+	id := c.Param("QuizID")
+	return c.String(http.StatusOK, id)
+	//return c.Render(http.StatusOK, "quiz", QuizData)
+}
+
+func GetRoom(c echo.Context) error {
+	// TODO: ここらへんDBと連携する
+	RoomData := RoomDataStruct {
+		{
+			RoomID: "12",
+			QuizTitle: "1300の歴史",
+			QuizSubTitle: "じじじせいじ編",
+		},
+		{
+			RoomID: "23",
+			QuizTitle: "1300の歴史",
+			QuizSubTitle: "キッズ編",
+		},
+	}
+	return c.Render(http.StatusOK, "lobby", RoomData)
+}
+
 func main() {
 	e := echo.New()
 	tl, err := template.New("t").ParseGlob("views/*.html")
@@ -56,17 +86,18 @@ func main() {
     }
 	e.Renderer = t
 
-	e.GET("/lobby", func(c echo.Context) error{
-		// TODO: ここらへんDBと連携する
-		data := struct {
-			LobbyID string
-			LobbyName string
-		} {
-			"123456789",
-			"1300の歴史",
-		}
-		return c.Render(http.StatusOK, "lobby", data)
-	})
+    e.GET("/lobby", GetRoom)
+	//e.GET("/lobby", func(c echo.Context) error{
+		//// TODO: ここらへんDBと連携する
+		//data := struct {
+			//LobbyID string
+			//LobbyName string
+		//} {
+			//"123456789",
+			//"1300の歴史",
+		//}
+		//return c.Render(http.StatusOK, "lobby", data)
+	//})
 	e.GET("/login", func(c echo.Context) error{
 		data := struct {
 			info string
@@ -115,7 +146,8 @@ func main() {
 		}
 		return c.Render(http.StatusOK, "timeout", data)
 	})
-    e.GET("/lobby/:id", GetQuiz)
+    e.GET("/lobby/:QuizID", GetQuiz)
+    e.GET("/room/:RoomID", GetQuiz)
 	e.GET("/", func(c echo.Context) error {
 		return c.String(http.StatusOK, "Here is root :)")
 	})
