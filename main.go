@@ -34,6 +34,14 @@ type RoomDataStruct []struct {
 	QuizSubTitle string
 }
 
+type QuizDiscription struct {
+	RoomID string
+	QuizTitle string
+	QuizSubTitle string
+	Author string
+	Date string
+	Comment string
+}
 
 func StartQuiz(c echo.Context) error {
 	// TODO: ここらへんDBと連携する
@@ -54,9 +62,15 @@ func StartQuiz(c echo.Context) error {
 
 func GetQuiz(c echo.Context) error {
 	// TODO: ここらへんDBと連携する
-	id := c.Param("QuizID")
-	return c.String(http.StatusOK, id)
-	//return c.Render(http.StatusOK, "quiz", QuizData)
+	QuizDiscription := QuizDiscription{
+		RoomID: c.Param("RoomID"),
+		QuizTitle: "1300の歴史",
+		QuizSubTitle: "じじじせいじ編",
+		Author: "ushigai",
+		Date: "2022/07/11",
+		Comment: "Duoなんだよなぁ",
+	}
+	return c.Render(http.StatusOK, "room", QuizDiscription)
 }
 
 func GetRoom(c echo.Context) error {
