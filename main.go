@@ -16,27 +16,33 @@ func (t *Template) Render(w io.Writer, name string, data interface{}, c echo.Con
 	return t.templates.ExecuteTemplate(w, name, data)
 }
 
-func getUserName(c echo.Context) error {
+type QuizDataStruct struct {
+	QuizID string
+	QuizText string
+	QuizAnswer string
+	QuizTimeout string
+	Choice1 string
+	Choice2 string
+	Choice3 string
+	Choice4 string
+	NextQuiz string
+} 
+
+
+func GetQuiz(c echo.Context) error {
 	// TODO: ここらへんDBと連携する
-	QuizData := struct {
-		QuizID string
-		QuizText string
-		QuizAnswer string
-		QuizTimeout string
-		Choice1 string
-		Choice2 string
-		Choice3 string
-		Choice4 string
-	} {
-		c.Param("id"),
-		"「家康の康ですよね？」は高専何年生のとき？",
-		"高専2年",
-		"6000",
-		"高専1年",
-		"高専2年",
-		"高専3年",
-		"高専4年",
+	QuizData := QuizDataStruct{
+			QuizID: c.Param("id"),
+			QuizText: "「家康の康ですよね？」は高専何年生のとき？",
+			QuizAnswer: "高専2年",
+			QuizTimeout: "6000",
+			Choice1: "高専1年",
+			Choice2: "高専2年",
+			Choice3: "高専3年",
+			Choice4: "高専4年",
+			NextQuiz: "2",
 	}
+
 	return c.Render(http.StatusOK, "quiz", QuizData)
 }
 
@@ -109,7 +115,7 @@ func main() {
 		}
 		return c.Render(http.StatusOK, "timeout", data)
 	})
-    e.GET("/lobby/:id", getUserName)
+    e.GET("/lobby/:id", GetQuiz)
 	e.GET("/", func(c echo.Context) error {
 		return c.String(http.StatusOK, "Here is root :)")
 	})
