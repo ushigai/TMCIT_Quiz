@@ -17,6 +17,7 @@ func (t *Template) Render(w io.Writer, name string, data interface{}, c echo.Con
 }
 
 type QuizDataStruct struct {
+	RoomID string
 	QuizID string
 	QuizText string
 	QuizAnswer string
@@ -46,15 +47,16 @@ type QuizDiscription struct {
 func StartQuiz(c echo.Context) error {
 	// TODO: ここらへんDBと連携する
 	QuizData := QuizDataStruct{
-			QuizID: c.Param("id"),
-			QuizText: "「家康の康ですよね？」は高専何年生のとき？",
-			QuizAnswer: "高専2年",
-			QuizTimeout: "6000",
-			Choice1: "高専1年",
-			Choice2: "高専2年",
-			Choice3: "高専3年",
-			Choice4: "高専4年",
-			NextQuiz: "2",
+		RoomID: c.Param("RoomID"),
+		QuizID: c.Param("QuizID"),
+		QuizText: "「家康の康ですよね？」は高専何年生のとき？",
+		QuizAnswer: "高専2年",
+		QuizTimeout: "6000",
+		Choice1: "高専1年",
+		Choice2: "高専2年",
+		Choice3: "高専3年",
+		Choice4: "高専4年",
+		NextQuiz: "finish",
 	}
 
 	return c.Render(http.StatusOK, "quiz", QuizData)
@@ -160,6 +162,8 @@ func main() {
 		}
 		return c.Render(http.StatusOK, "timeout", data)
 	})
+	
+    e.GET("/quiz/:RoomID/:QuizID", StartQuiz)
     e.GET("/lobby/:QuizID", GetQuiz)
     e.GET("/room/:RoomID", GetQuiz)
 	e.GET("/", func(c echo.Context) error {
