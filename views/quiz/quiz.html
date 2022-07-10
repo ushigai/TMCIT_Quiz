@@ -6,20 +6,22 @@
     <div id="area2"></div>
     <div id="area3"></div>
     <div id="area4"></div>
+    <div id="JudgePos"></div>
     <script>
         var answers = ["{{.Choice1}}", "{{.Choice2}}", "{{.Choice3}}", "{{.Choice4}}"];
         var CollectAns = "{{.QuizAnswer}}";
         var UserAns = "";
+        var GOING = false;
 
         var start = function () {
             shuffle(answers);
-            var str1 = "<input type='button' value='" + answers[0];
+            var str1 = "<input type='button' id='choice1' value='" + answers[0];
             str1 += "' onclick='judge(UserAns=\"" + answers[0] + "\")'>";
-            var str2 = "<input type='button' value='" + answers[1];
+            var str2 = "<input type='button' id='choice2' value='" + answers[1];
             str2 += "' onclick='judge(UserAns=\"" + answers[1] + "\")'>";
-            var str3 = "<input type='button' value='" + answers[2];
+            var str3 = "<input type='button' id='choice3' value='" + answers[2];
             str3 += "' onclick='judge(UserAns=\"" + answers[2] + "\")'>";
-            var str4 = "<input type='button' value='" + answers[3];
+            var str4 = "<input type='button' id='choice4' value='" + answers[3];
             str4 += "' onclick='judge(UserAns=\"" + answers[3] + "\")'>";
             document.getElementById("area1").innerHTML = str1;
             document.getElementById("area2").innerHTML = str2;
@@ -28,16 +30,30 @@
             _ = setTimeout("judge('')", {{ .QuizTimeout }});
         }
         var judge = function(UserAns){ 
+            if (GOING) {
+                return
+            }
+            GOING = true;
+            for (let i = 1; i < 5; i++) {
+                const inp = document.getElementById("choice"+i);
+                inp.disabled = true;
+            }
+            const pos = document.getElementById("JudgePos");
             switch (UserAns) {
                 case "":
-                    window.location = "/timeout";
+                    pos.insertAdjacentHTML("afterbegin", "<h3>Time is over!!!</h3>");
                     break;
                 case CollectAns:
-                    window.location = "/collect";
+                    pos.insertAdjacentHTML("afterbegin", "<h3>Collect answer!!!</h3>");
                     break;
                 default:
-                    window.location = "/wrong";
+                    pos.insertAdjacentHTML("afterbegin", "<h3>Wrong answer!!!</h3>");
                     break;
+            }
+            if ( {{.NextQuiz}} == "finish" ) {
+                pos.insertAdjacentHTML("afterend", "<a href='/lobby'>おわおわり</a>");
+            } else {
+                pos.insertAdjacentHTML("afterend", "<a href='/quiz/{{.RoomID}}/{{.NextQuiz}}'>Go on to the next quiz.</a>");
             }
         }
         function shuffle(arr){
