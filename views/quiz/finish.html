@@ -1,6 +1,9 @@
-<!DOCTYPE html>
-<html>
-    <body>
-        おわり
-    </body>
-</html>
+{{define "finish"}}
+    {{template "header" .}}
+    <br><br>
+    おわり
+    {{.}}
+    <br><br>
+    {{template "footer" .}}
+{{end}}
+
