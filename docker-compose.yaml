@@ -1,9 +1,34 @@
 version: "3"
 services:
-  api:
-    build: .
+ goapp:
+    container_name: goapp
+    build:
+      dockerfile: ./build/Dockerfile
     ports:
-      - "8080:8080"
-    working_dir: /app
+      - 8080:8080
+    volumes:
+      - ./cmd/hello:/go/src/app
+    restart: always
     tty: true
+    command: >
+      sh -c 'go get && go run main.go' 
 
+ db:
+    restart: always
+    build:
+      context: ./
+      dockerfile: ./db/Dockerfile
+    container_name: mariadb
+    environment:
+      MARIADB_ROOT_PASSWORD: tmcit
+      MARIADB_DATABASE: ques
+      MARIADB_USER: tmcit
+      MARIADB_PASSWORD: tmcit
+      TZ: 'Asia/Tokyo'
+    volumes:
+      - ./db/data:/var/lib/mysql
+      - ./db/my.cnf:/etc/mysql/conf.d/my.cnf
+      - ./initdb.d/:/docker-entrypoint-initdb.d
+    command: --default-authentication-plugin=mysql_native_password --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci    
+    ports:
+      - 3306:3306
