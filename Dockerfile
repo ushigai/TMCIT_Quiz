@@ -16,5 +16,5 @@ ENV CGO_ENABLED=0 \
 EXPOSE 8080
 
 
-CMD ["server"]
+CMD ["/app/server"]
 
