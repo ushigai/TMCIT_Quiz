@@ -1,4 +1,5 @@
 # local ignore list
+main
 test.go
 
 # Binaries for programs and plugins
