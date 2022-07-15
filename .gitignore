@@ -1,5 +1,6 @@
 # local ignore list
 test.go
+*/mysql/data/*
 
 # Binaries for programs and plugins
 *.exe
