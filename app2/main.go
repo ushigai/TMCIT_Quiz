@@ -51,7 +51,7 @@ func main() {
 		n := ctx.Param("id")
 		id, err := strconv.Atoi(n)
 		if err != nil {
-		panic("id is not a number")
+			panic("id is not a number")
 		}
 		var user User
 		db.First(&user, id)
@@ -77,21 +77,21 @@ func sqlConnect() (database *gorm.DB) {
 	db, err := gorm.Open(DBMS, CONNECT)
 	if err != nil {
 		for {
-		if err == nil {
-			fmt.Println("")
-			break
-		}
-		fmt.Print(".")
-		time.Sleep(time.Second)
-		count++
-		if count > 180 {
-			fmt.Println("")
-			panic(err)
-		}
-		db, err = gorm.Open(DBMS, CONNECT)
+			if err == nil {
+				fmt.Println("")
+				break
+			}
+			fmt.Print(".")
+			time.Sleep(time.Second)
+			count++
+			if count > 180 {
+				fmt.Println("")
+				panic(err)
+			}
+			db, err = gorm.Open(DBMS, CONNECT)
 		}
 	}
-
+	//db.LogMode(true)
 	return db
 }
 
