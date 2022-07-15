@@ -7,8 +7,8 @@ COPY . /app
     #&& go mod tidy \
     #&& go build -o server
 
-RUN go install
-RUN go build -o server
+RUN go install && \
+    go build -o server
 
 ENV CGO_ENABLED=0 \
     GOOS=linux \
