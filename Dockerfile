@@ -7,14 +7,17 @@ COPY . /app
     #&& go mod tidy \
     #&& go build -o server
 
-RUN go install && \
-    go build -o server
+#RUN go install && \
+#    go build -o server
 
-ENV CGO_ENABLED=0 \
-    GOOS=linux \
-    GOARCH=amd64
-EXPOSE 8080
+RUN go install
 
+#ENV CGO_ENABLED=0 \
+#    GOOS=linux \
+#    GOARCH=amd64
+#EXPOSE 8080
 
-CMD ["/app/server"]
+CMD ["go", "run", "main.go"]
+
+#CMD ["/app/server"]
 

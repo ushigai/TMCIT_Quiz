@@ -1,12 +1,14 @@
 version: "3"
 services:
-  api:
-    build: .
-    ports:
-      - "8080:8080"
+  app:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    stdin_open: true
     working_dir: /app
     tty: true
-    stdin_open: true
+    ports:
+      - "8080:8080"
     depends_on:
       - "db"
   db:
