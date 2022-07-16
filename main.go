@@ -6,7 +6,6 @@ import (
 	"io"
 	"os"
 	"fmt"
-	"time"
 
 	"github.com/jinzhu/gorm"
 	_ "github.com/go-sql-driver/mysql"
@@ -160,7 +159,6 @@ func sqlConnect() (database *gorm.DB) {
 
 	CONNECT := USER + ":" + PASS + "@" + PROTOCOL + "/" + DBNAME + "?charset=utf8&parseTime=true&loc=Asia%2FTokyo"
 
-	count := 0
 	db, err := gorm.Open(DBMS, CONNECT)
 	if err != nil {
 		panic("DB接続失敗🤪🤪🤪")
