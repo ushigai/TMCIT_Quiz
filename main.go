@@ -4,6 +4,7 @@ import (
     "net/http"
 	"html/template"
 	"io"
+	"os"
 	"fmt"
 	"time"
 
@@ -126,7 +127,7 @@ func main() {
 		data := struct { info string } { "home", }
 		return c.Render(http.StatusOK, "home", data)
 	})
-	
+
     e.GET("/lobby/:QuizID", GetQuiz)
     e.GET("/lobby", GetRoom)
     e.GET("/room/:RoomID", GetQuiz)
@@ -150,11 +151,12 @@ func main() {
 
 
 func sqlConnect() (database *gorm.DB) {
+	USER := os.Getenv("DB_USER")
+	PASS := os.Getenv("DB_PASSWORD")
+	DBNAME := os.Getenv("DB_NAME")
+
 	DBMS := "mysql"
-	USER := "go_test"
-	PASS := "password"
 	PROTOCOL := "tcp(db:3306)"
-	DBNAME := "go_database"
 
 	CONNECT := USER + ":" + PASS + "@" + PROTOCOL + "/" + DBNAME + "?charset=utf8&parseTime=true&loc=Asia%2FTokyo"
 
@@ -162,20 +164,6 @@ func sqlConnect() (database *gorm.DB) {
 	db, err := gorm.Open(DBMS, CONNECT)
 	if err != nil {
 		panic("DB接続失敗🤪🤪🤪")
-		for {
-			if err == nil {
-				fmt.Println("")
-				break
-			}
-			fmt.Print(".")
-			time.Sleep(time.Second)
-			count++
-			if count > 180 {
-				fmt.Println("")
-				panic(err)
-			}
-			db, err = gorm.Open(DBMS, CONNECT)
-		}
 	} else {
 		fmt.Println("やったね😊")
 	}
