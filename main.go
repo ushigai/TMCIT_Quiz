@@ -15,11 +15,10 @@ import (
 )
 
 type User struct {
-	gorm.Model
-	Name string
-	Email string
+	Id    int    `json:"id" param:"id"`
+	Name  string `json:"name"`
+	Email string `json:"email"`
 }
-
 
 type Template struct {
 	templates *template.Template
@@ -105,6 +104,51 @@ func GetRoom(c echo.Context) error {
 	return c.Render(http.StatusOK, "lobby", RoomData)
 }
 
+func getUsers(c echo.Context) error {
+	db := sqlConnect()
+	users := []User{}
+	db.Find(&users)
+	defer db.Close()
+	return c.JSON(http.StatusOK, users)
+}
+
+func getUser(c echo.Context) error {
+	user := User{}
+	if err := c.Bind(&user); err != nil {
+		return err
+	}
+	database.DB.Take(&user)
+
+	return c.JSON(http.StatusOK, user)
+}
+
+/*
+func updateUser(c echo.Context) error {
+	user := User{}
+	if err := c.Bind(&user); err != nil {
+		return err
+	}
+	database.DB.Save(&user)
+	return c.JSON(http.StatusOK, user)
+}
+
+func createUser(c echo.Context) error {
+	user := User{}
+	if err := c.Bind(&user); err != nil {
+		return err
+	}
+	database.DB.Create(&user)
+	return c.JSON(http.StatusCreated, user)
+}
+
+func deleteUser(c echo.Context) error {
+	id := c.Param("id")
+	database.DB.Delete(&User{}, id)
+	return c.NoContent(http.StatusNoContent)
+}
+*/
+
+
 func main() {
 	db := sqlConnect()
 	db.AutoMigrate(&User{})
@@ -144,6 +188,8 @@ func main() {
 		}
 		return false, nil
 	}))
+	
+	e.GET("/users", getUsers)
 
     e.Logger.Fatal(e.Start(":8080"))
 
