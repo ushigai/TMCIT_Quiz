@@ -26,8 +26,17 @@ func Connect() {
 
 	// [ユーザ名]:[パスワード]@tcp([ホスト名]:[ポート番号])/[データベース名]?charset=[文字コード]
 	dsn := user + ":" + password + "@tcp(" + host + ":" + port + ")/" + database_name + "?charset=utf8mb4" // "webuser:webpass@tcp(db:3306)/go_mysql8_development?charset=utf8mb4"
+	fmt.Println("user : " + user)
+	fmt.Println("password : " + password)
+	fmt.Println("host : " + host)
+	fmt.Println("port : " + port)
+	fmt.Println("database_name : " + database_name)
+	fmt.Println("dsn : " + dsn)
 	DB, err = gorm.Open(mysql.Open(dsn), &gorm.Config{})
 	if err != nil {
+		fmt.Println("DB connection error")
 		fmt.Println(err.Error())
+	} else{
+		fmt.Println("DB Connection success")
 	}
 }
