@@ -8,6 +8,7 @@ import (
 	"fmt"
 
 	"github.com/jinzhu/gorm"
+	"github.com/joho/godotenv"
 	_ "github.com/go-sql-driver/mysql"
     "github.com/labstack/echo"
 	"github.com/labstack/echo/middleware"
