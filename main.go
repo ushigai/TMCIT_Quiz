@@ -4,9 +4,22 @@ import (
     "net/http"
 	"html/template"
 	"io"
+	"fmt"
+	"strconv"
+	"time"
+
+	"github.com/jinzhu/gorm"
+	_ "github.com/go-sql-driver/mysql"
     "github.com/labstack/echo"
 	"github.com/labstack/echo/middleware"
 )
+
+type User struct {
+	gorm.Model
+	Name string
+	Email string
+}
+
 
 type Template struct {
 	templates *template.Template
@@ -93,6 +106,10 @@ func GetRoom(c echo.Context) error {
 }
 
 func main() {
+	db := sqlConnect()
+	db.AutoMigrate(&User{})
+	defer db.Close()
+
 	e := echo.New()
 	tl, err := template.New("t").ParseGlob("views/*.html")
     tl.ParseGlob("views/common/*.html")
