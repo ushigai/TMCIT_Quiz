@@ -113,40 +113,46 @@ func getUsers(c echo.Context) error {
 }
 
 func getUser(c echo.Context) error {
+	db := sqlConnect()
 	user := User{}
 	if err := c.Bind(&user); err != nil {
 		return err
 	}
-	database.DB.Take(&user)
+	db.Take(&user)
+	defer db.Close()
 
 	return c.JSON(http.StatusOK, user)
 }
 
-/*
 func updateUser(c echo.Context) error {
+	db := sqlConnect()
 	user := User{}
 	if err := c.Bind(&user); err != nil {
 		return err
 	}
-	database.DB.Save(&user)
+	db.Save(&user)
+	defer db.Close()
 	return c.JSON(http.StatusOK, user)
 }
 
 func createUser(c echo.Context) error {
+	db := sqlConnect()
 	user := User{}
 	if err := c.Bind(&user); err != nil {
 		return err
 	}
-	database.DB.Create(&user)
+	db.Create(&user)
+	defer db.Close()
 	return c.JSON(http.StatusCreated, user)
 }
 
 func deleteUser(c echo.Context) error {
+	db := sqlConnect()
 	id := c.Param("id")
-	database.DB.Delete(&User{}, id)
+	db.Delete(&User{}, id)
+	defer db.Close()
 	return c.NoContent(http.StatusNoContent)
 }
-*/
 
 
 func main() {
@@ -192,6 +198,10 @@ func main() {
 	e.GET("/users", getUsers)
 
     e.Logger.Fatal(e.Start(":8080"))
+	e.GET("/users/:id", getUser)
+	e.PUT("/users/:id", updateUser)
+	e.POST("/users", createUser)
+	e.DELETE("/users/:id", deleteUser)
 
 }
 
