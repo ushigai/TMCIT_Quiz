@@ -150,6 +150,10 @@ func main() {
 
 
 func sqlConnect() (database *gorm.DB) {
+	err := godotenv.Load()
+	if err != nil {
+		panic(err.Error())
+	}
 	USER := os.Getenv("DB_USER")
 	PASS := os.Getenv("DB_PASSWORD")
 	DBNAME := os.Getenv("DB_NAME")
@@ -158,6 +162,12 @@ func sqlConnect() (database *gorm.DB) {
 	PROTOCOL := "tcp(db:3306)"
 
 	CONNECT := USER + ":" + PASS + "@" + PROTOCOL + "/" + DBNAME + "?charset=utf8&parseTime=true&loc=Asia%2FTokyo"
+	
+	fmt.Println("user : " + USER)
+	fmt.Println("password : " + PASS)
+	fmt.Println("DB name : " + DBNAME)
+	fmt.Println("DBMS : " + DBMS)
+	fmt.Println("protocol : " + PROTOCOL)
 
 	db, err := gorm.Open(DBMS, CONNECT)
 	if err != nil {
