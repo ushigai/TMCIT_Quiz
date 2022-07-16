@@ -4,6 +4,8 @@ import (
     "net/http"
 	"html/template"
 	"io"
+	"fmt"
+	"time"
 
 	"github.com/jinzhu/gorm"
 	_ "github.com/go-sql-driver/mysql"
@@ -159,7 +161,7 @@ func sqlConnect() (database *gorm.DB) {
 	count := 0
 	db, err := gorm.Open(DBMS, CONNECT)
 	if err != nil {
-		panic("DB接続失敗")
+		panic("DB接続失敗🤪🤪🤪")
 		for {
 			if err == nil {
 				fmt.Println("")
@@ -174,6 +176,8 @@ func sqlConnect() (database *gorm.DB) {
 			}
 			db, err = gorm.Open(DBMS, CONNECT)
 		}
+	} else {
+		fmt.Println("やったね😊")
 	}
 	//db.LogMode(true)
 	return db
