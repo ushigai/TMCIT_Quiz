@@ -2,8 +2,6 @@ CREATE DATABASE if not exists go_database;
 
 use go_database;
 
-DROP TABLE IF EXISTS users;
-DROP TABLE IF EXISTS rooms;
 
 CREATE TABLE if not exists users (
 	id INT NOT NULL AUTO_INCREMENT,

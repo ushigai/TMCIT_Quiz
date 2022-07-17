@@ -42,9 +42,9 @@ type QuizDataStruct struct {
 }
 
 type Room struct {
-	RoomID       int    `json:"id" parm:"id"`
-	QuizTitle    string `json:"title"`
-	QuizSubTitle string `json:"subtitle"`
+	Id       int    `json:"id" param:"id"`
+	Title    string `json:"title"`
+	Subtitle string `json:"subtitle"`
 }
 
 type QuizDiscription struct {
@@ -93,6 +93,7 @@ func GetRoom(c echo.Context) error {
 	rooms := []Room{}
 	db.Find(&rooms)
 	defer db.Close()
+	fmt.Println(rooms)
 	return c.Render(http.StatusOK, "lobby", rooms)
 }
 
