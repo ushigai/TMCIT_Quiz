@@ -75,7 +75,10 @@ func GetQuiz(c echo.Context) error {
 	if err := c.Bind(&room); err != nil {
 		return err
 	}
-	db.Take(&room)
+	//db.Take(&room)
+	id := c.Param("RoomID")
+	fmt.Println(id)
+	db.Raw("select * from rooms where id="+id).Scan(&room)
 	defer db.Close()
 	fmt.Println(room)
 	return c.Render(http.StatusOK, "room", room)
