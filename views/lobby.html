@@ -1,10 +1,16 @@
 {{define "lobby"}}
     {{template "header" .}}
     <body onload="ViewRooms()">
+	{{ range .rooms }}
+		<tr>
+            <a href="/room/{{ .Id }}">【{{ .Title }}】{{ .Subtitle }}</a><br>
+		</tr>
+	{{end}}
     <br><br>
         <div id="pos"></div>
         <script>
             var RoomData = JSON.stringify({{.}});
+            console.log(RoomData);
             RoomData = JSON.parse(RoomData);
             var RoomN = RoomData.length;
             var RoomHTMLBase = `<br>
