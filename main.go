@@ -187,12 +187,11 @@ func main() {
 	}))
 
 	e.GET("/users", getUsers)
-
-	e.Logger.Fatal(e.Start(":8080"))
 	e.GET("/users/:id", getUser)
 	e.PUT("/users/:id", updateUser)
 	e.POST("/users", createUser)
 	e.DELETE("/users/:id", deleteUser)
+	e.Logger.Fatal(e.Start(":8080"))
 
 }
 
