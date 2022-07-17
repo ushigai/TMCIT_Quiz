@@ -219,7 +219,7 @@ func sqlConnect() (database *gorm.DB) {
 	PROTOCOL := "tcp(db:3306)"
 
 	CONNECT := USER + ":" + PASS + "@" + PROTOCOL + "/" + DBNAME + "?charset=utf8&parseTime=true&loc=Asia%2FTokyo"
-	
+
 	fmt.Println("user : " + USER)
 	fmt.Println("password : " + PASS)
 	fmt.Println("DB name : " + DBNAME)
