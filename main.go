@@ -69,79 +69,25 @@ func StartQuiz(c echo.Context) error {
 }
 
 func GetQuiz(c echo.Context) error {
-	// TODO: ここらへんDBと連携する
 	db := sqlConnect()
 	room := Room{}
 	if err := c.Bind(&room); err != nil {
 		return err
 	}
-	//db.Take(&room)
 	id := c.Param("RoomID")
-	fmt.Println(id)
-	db.Raw("select * from rooms where id="+id).Scan(&room)
+	db.Raw("select * from rooms where id=" + id).Scan(&room)
 	defer db.Close()
 	fmt.Println(room)
 	return c.Render(http.StatusOK, "room", room)
 }
 
 func GetRoom(c echo.Context) error {
-	// TODO: ここらへんDBと連携する
 	db := sqlConnect()
 	rooms := []Room{}
 	db.Find(&rooms)
 	defer db.Close()
 	fmt.Println(rooms)
 	return c.Render(http.StatusOK, "lobby", rooms)
-}
-
-func getUsers(c echo.Context) error {
-	db := sqlConnect()
-	users := []User{}
-	db.Find(&users)
-	defer db.Close()
-	return c.JSON(http.StatusOK, users)
-}
-
-func getUser(c echo.Context) error {
-	db := sqlConnect()
-	user := User{}
-	if err := c.Bind(&user); err != nil {
-		return err
-	}
-	db.Take(&user)
-	defer db.Close()
-
-	return c.JSON(http.StatusOK, user)
-}
-
-func updateUser(c echo.Context) error {
-	db := sqlConnect()
-	user := User{}
-	if err := c.Bind(&user); err != nil {
-		return err
-	}
-	db.Save(&user)
-	defer db.Close()
-	return c.JSON(http.StatusOK, user)
-}
-
-func createUser(c echo.Context) error {
-	db := sqlConnect()
-	user := User{}
-	if err := c.Bind(&user); err != nil {
-		return err
-	}
-	db.Create(&user)
-	defer db.Close()
-	return c.JSON(http.StatusCreated, user)
-}
-
-func deleteUser(c echo.Context) error {
-	db := sqlConnect()
-	id := c.Param("id")
-	db.Delete(&User{}, id)
-	defer db.Close()
-	return c.NoContent(http.StatusNoContent)
 }
 
 func main() {
@@ -184,11 +130,6 @@ func main() {
 		return false, nil
 	}))
 
-	e.GET("/users", getUsers)
-	e.GET("/users/:id", getUser)
-	e.PUT("/users/:id", updateUser)
-	e.POST("/users", createUser)
-	e.DELETE("/users/:id", deleteUser)
 	e.Logger.Fatal(e.Start(":8080"))
 
 }
