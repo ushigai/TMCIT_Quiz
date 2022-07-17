@@ -41,7 +41,7 @@ type QuizDataStruct struct {
 	NextQuiz    string
 }
 
-type RoomDataStruct struct {
+type Room struct {
 	RoomID       int    `json:"id" parm:"id"`
 	QuizTitle    string `json:"title"`
 	QuizSubTitle string `json:"subtitle"`
@@ -90,10 +90,10 @@ func GetQuiz(c echo.Context) error {
 func GetRoom(c echo.Context) error {
 	// TODO: ここらへんDBと連携する
 	db := sqlConnect()
-	room_data := []RoomDataStruct{}
-	db.Find(&room_data)
+	rooms := []Room{}
+	db.Find(&rooms)
 	defer db.Close()
-	return c.Render(http.StatusOK, "lobby", room_data)
+	return c.Render(http.StatusOK, "lobby", rooms)
 }
 
 func getUsers(c echo.Context) error {
