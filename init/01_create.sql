@@ -14,11 +14,16 @@ CREATE TABLE if not exists rooms (
 	id INT not null AUTO_INCREMENT,
 	title VARCHAR(255),
 	subtitle VARCHAR(255),
+	author VARCHAR(255),
+	date VARCHAR(255),
+	comment VARCHAR(255),
 	PRIMARY KEY (id)
 );
 
 INSERT INTO users(id, name, email) VALUES(1, "Yamada", "yamada@example.com");
 INSERT INTO users(id, name, email) VALUES(2, "Tanaka", "tanaka@example.com");
 
-INSERT INTO rooms(title, subtitle) VALUES("1300", "seiji");
-INSERT INTO rooms(title, subtitle) VALUES("1300", "kids");
+INSERT INTO rooms(title, subtitle, author, date, comment) 
+			VALUES("1300", "seiji", "ushigai", "2022/07/01", "nandayona");
+INSERT INTO rooms(title, subtitle, author, date, comment) 
+			VALUES("1300", "kids", "shoma", "2022/07/02", "shoma kami");

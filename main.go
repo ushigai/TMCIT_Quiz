@@ -45,15 +45,9 @@ type Room struct {
 	Id       int    `json:"id" param:"id"`
 	Title    string `json:"title"`
 	Subtitle string `json:"subtitle"`
-}
-
-type QuizDiscription struct {
-	RoomID       string
-	QuizTitle    string
-	QuizSubTitle string
-	Author       string
-	Date         string
-	Comment      string
+	Author   string `json:author`
+	Date     string `json:date`
+	Comment  string `json:comment`
 }
 
 func StartQuiz(c echo.Context) error {
@@ -76,15 +70,15 @@ func StartQuiz(c echo.Context) error {
 
 func GetQuiz(c echo.Context) error {
 	// TODO: ここらへんDBと連携する
-	QuizDiscription := QuizDiscription{
-		RoomID:       c.Param("RoomID"),
-		QuizTitle:    "1300の歴史",
-		QuizSubTitle: "じじじせいじ編",
-		Author:       "ushigai",
-		Date:         "2022/07/11",
-		Comment:      "Duoなんだよなぁ",
+	db := sqlConnect()
+	room := Room{}
+	if err := c.Bind(&room); err != nil {
+		return err
 	}
-	return c.Render(http.StatusOK, "room", QuizDiscription)
+	db.Take(&room)
+	defer db.Close()
+	fmt.Println(room)
+	return c.Render(http.StatusOK, "room", room)
 }
 
 func GetRoom(c echo.Context) error {

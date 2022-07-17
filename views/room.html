@@ -1,14 +1,14 @@
 {{define "room"}}
     {{template "header" .}}
     <br><br>
-    ルーム番号：{{.RoomID}}<br>
-    クイズ名：{{.QuizTitle}}<br>
-    サブタイトル：{{.QuizSubTitle}}<br>
+    ルーム番号：{{.Id}}<br>
+    クイズ名：{{.Title}}<br>
+    サブタイトル：{{.Subtitle}}<br>
     作者：{{.Author}}<br>
     作成日：{{.Date}}<br>
     コメント：{{.Comment}}<br>
     <br>
-    <a href="/quiz/{{.RoomID}}/1">
+    <a href="/quiz/{{.Id}}/1">
         <button type="button">クイズを開始する</button>
     </a>
     <br><br>
