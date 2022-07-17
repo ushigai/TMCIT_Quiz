@@ -1,16 +1,16 @@
 package main
 
 import (
-    "net/http"
+	"fmt"
 	"html/template"
 	"io"
+	"net/http"
 	"os"
-	"fmt"
 
+	_ "github.com/go-sql-driver/mysql"
 	"github.com/jinzhu/gorm"
 	"github.com/joho/godotenv"
-	_ "github.com/go-sql-driver/mysql"
-    "github.com/labstack/echo"
+	"github.com/labstack/echo"
 	"github.com/labstack/echo/middleware"
 )
 
@@ -29,46 +29,46 @@ func (t *Template) Render(w io.Writer, name string, data interface{}, c echo.Con
 }
 
 type QuizDataStruct struct {
-	RoomID string
-	QuizID string
-	QuizText string
-	QuizAnswer string
+	RoomID      string
+	QuizID      string
+	QuizText    string
+	QuizAnswer  string
 	QuizTimeout string
-	Choice1 string
-	Choice2 string
-	Choice3 string
-	Choice4 string
-	NextQuiz string
-} 
+	Choice1     string
+	Choice2     string
+	Choice3     string
+	Choice4     string
+	NextQuiz    string
+}
 
-type RoomDataStruct []struct {
-	RoomID string
-	QuizTitle string
-	QuizSubTitle string
+type RoomDataStruct struct {
+	RoomID       int    `json:"id" parm:"id"`
+	QuizTitle    string `json:"title"`
+	QuizSubTitle string `json:"subtitle"`
 }
 
 type QuizDiscription struct {
-	RoomID string
-	QuizTitle string
+	RoomID       string
+	QuizTitle    string
 	QuizSubTitle string
-	Author string
-	Date string
-	Comment string
+	Author       string
+	Date         string
+	Comment      string
 }
 
 func StartQuiz(c echo.Context) error {
 	// TODO: ここらへんDBと連携する
 	QuizData := QuizDataStruct{
-		RoomID: c.Param("RoomID"),
-		QuizID: c.Param("QuizID"),
-		QuizText: "「家康の康ですよね？」は高専何年生のとき？",
-		QuizAnswer: "高専2年",
+		RoomID:      c.Param("RoomID"),
+		QuizID:      c.Param("QuizID"),
+		QuizText:    "「家康の康ですよね？」は高専何年生のとき？",
+		QuizAnswer:  "高専2年",
 		QuizTimeout: "6000",
-		Choice1: "高専1年",
-		Choice2: "高専2年",
-		Choice3: "高専3年",
-		Choice4: "高専4年",
-		NextQuiz: "finish",
+		Choice1:     "高専1年",
+		Choice2:     "高専2年",
+		Choice3:     "高専3年",
+		Choice4:     "高専4年",
+		NextQuiz:    "finish",
 	}
 
 	return c.Render(http.StatusOK, "quiz", QuizData)
@@ -77,30 +77,22 @@ func StartQuiz(c echo.Context) error {
 func GetQuiz(c echo.Context) error {
 	// TODO: ここらへんDBと連携する
 	QuizDiscription := QuizDiscription{
-		RoomID: c.Param("RoomID"),
-		QuizTitle: "1300の歴史",
+		RoomID:       c.Param("RoomID"),
+		QuizTitle:    "1300の歴史",
 		QuizSubTitle: "じじじせいじ編",
-		Author: "ushigai",
-		Date: "2022/07/11",
-		Comment: "Duoなんだよなぁ",
+		Author:       "ushigai",
+		Date:         "2022/07/11",
+		Comment:      "Duoなんだよなぁ",
 	}
 	return c.Render(http.StatusOK, "room", QuizDiscription)
 }
 
 func GetRoom(c echo.Context) error {
 	// TODO: ここらへんDBと連携する
-	RoomData := RoomDataStruct {
-		{
-			RoomID: "12",
-			QuizTitle: "1300の歴史",
-			QuizSubTitle: "じじじせいじ編",
-		},
-		{
-			RoomID: "23",
-			QuizTitle: "1300の歴史",
-			QuizSubTitle: "キッズ編",
-		},
-	}
+	db := sqlConnect()
+	RoomData := []RoomDataStruct{}
+	db.Find(&RoomData)
+	defer db.Close()
 	return c.Render(http.StatusOK, "lobby", RoomData)
 }
 
@@ -154,7 +146,6 @@ func deleteUser(c echo.Context) error {
 	return c.NoContent(http.StatusNoContent)
 }
 
-
 func main() {
 	db := sqlConnect()
 	db.AutoMigrate(&User{})
@@ -162,26 +153,26 @@ func main() {
 
 	e := echo.New()
 	tl, err := template.New("t").ParseGlob("views/*.html")
-    tl.ParseGlob("views/common/*.html")
-    tl.ParseGlob("views/quiz/*.html")
-    t := &Template{
-        templates: template.Must(tl, err),
-    }
+	tl.ParseGlob("views/common/*.html")
+	tl.ParseGlob("views/quiz/*.html")
+	t := &Template{
+		templates: template.Must(tl, err),
+	}
 	e.Renderer = t
 
-	e.GET("/login", func(c echo.Context) error{
-		data := struct { info string } { "login", }
+	e.GET("/login", func(c echo.Context) error {
+		data := struct{ info string }{"login"}
 		return c.Render(http.StatusOK, "login", data)
 	})
-	e.GET("/home", func(c echo.Context) error{
-		data := struct { info string } { "home", }
+	e.GET("/home", func(c echo.Context) error {
+		data := struct{ info string }{"home"}
 		return c.Render(http.StatusOK, "home", data)
 	})
 
-    e.GET("/lobby/:QuizID", GetQuiz)
-    e.GET("/lobby", GetRoom)
-    e.GET("/room/:RoomID", GetQuiz)
-    e.GET("/quiz/:RoomID/:QuizID", StartQuiz)
+	e.GET("/lobby/:QuizID", GetQuiz)
+	e.GET("/lobby", GetRoom)
+	e.GET("/room/:RoomID", GetQuiz)
+	e.GET("/quiz/:RoomID/:QuizID", StartQuiz)
 
 	e.GET("/", func(c echo.Context) error {
 		return c.String(http.StatusOK, "Here is root :)")
@@ -194,17 +185,16 @@ func main() {
 		}
 		return false, nil
 	}))
-	
+
 	e.GET("/users", getUsers)
 
-    e.Logger.Fatal(e.Start(":8080"))
+	e.Logger.Fatal(e.Start(":8080"))
 	e.GET("/users/:id", getUser)
 	e.PUT("/users/:id", updateUser)
 	e.POST("/users", createUser)
 	e.DELETE("/users/:id", deleteUser)
 
 }
-
 
 func sqlConnect() (database *gorm.DB) {
 	err := godotenv.Load()
@@ -235,4 +225,3 @@ func sqlConnect() (database *gorm.DB) {
 	//db.LogMode(true)
 	return db
 }
-

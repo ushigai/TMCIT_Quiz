@@ -11,5 +11,15 @@ CREATE TABLE if not exists users (
 	PRIMARY KEY (id)
 );
 
+CREATE TABLE if not exists RoomData (
+	id INT not null AUTO_INCREMENT,
+	title VARCHAR(255),
+	subtitle VARCHAR(255),
+	PRIMARY KEY (id)
+);
+
 INSERT INTO users(id, name, email) VALUES(1, "Yamada", "yamada@example.com");
 INSERT INTO users(id, name, email) VALUES(2, "Tanaka", "tanaka@example.com");
+
+INSERT INTO RoomData(title, subtitle) VALUES("1300", "seiji");
+INSERT INTO RoomData(title, subtitle) VALUES("1300", "kids");
