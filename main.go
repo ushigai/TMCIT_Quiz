@@ -90,10 +90,10 @@ func GetQuiz(c echo.Context) error {
 func GetRoom(c echo.Context) error {
 	// TODO: ここらへんDBと連携する
 	db := sqlConnect()
-	RoomData := []RoomDataStruct{}
-	db.Find(&RoomData)
+	room_data := []RoomDataStruct{}
+	db.Find(&room_data)
 	defer db.Close()
-	return c.Render(http.StatusOK, "lobby", RoomData)
+	return c.Render(http.StatusOK, "lobby", room_data)
 }
 
 func getUsers(c echo.Context) error {
