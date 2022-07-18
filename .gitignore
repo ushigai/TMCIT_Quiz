@@ -2,6 +2,7 @@
 main
 test.go
 rebuildDocker.sh
+.env
 
 # Binaries for programs and plugins
 *.exe
