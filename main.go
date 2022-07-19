@@ -54,7 +54,7 @@ func StartQuiz(c echo.Context) error {
 	id := c.Param("RoomID")
 	db.Raw("select * from quizzes where room_id=" + id).Scan(&quizzes)
 	defer db.Close()
-	return c.Render(http.StatusOK, "testjson", quizzes)
+	return c.Render(http.StatusOK, "quiz", quizzes)
 }
 
 func GetQuiz(c echo.Context) error {

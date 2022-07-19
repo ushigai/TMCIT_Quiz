@@ -1,5 +1,20 @@
 {{define "quiz"}}
     {{template "header" .}}
+    
+<body>
+    <br><br>
+        {{range .}}
+            <tr>{{.Statement}}</tr>
+            <tr>{{.Answer}}</tr>
+            <tr>{{.Choice1}}</tr>
+            <tr>{{.Choice2}}</tr>
+            <tr>{{.Choice3}}</tr>
+            <tr>{{.Choice4}}</tr>
+        {{end}}
+    <br><br>
+</body>
+
+<!--
     <body onload="start()">
     <p>{{.QuizText}}</p>
     <div id="area1"></div>
@@ -64,5 +79,6 @@
         }
     </script>
     </body>
+-->
     {{template "footer" .}}
 {{end}}
