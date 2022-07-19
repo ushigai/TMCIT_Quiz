@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+    <body>
+        <div id="area_statement"></div>
+        <div id="area_choice1"></div>
+        <div id="area_choice2"></div>
+        <div id="area_choice3"></div>
+        <div id="area_choice4"></div>
+        
+        <div id="JudgePos"></div>
+        <script>
+            var Quiz = JSON.stringify({{.}});
+            Quiz = JSON.parse(Quiz);
+            var QuizN  = Quiz.length;
+            
+            var StartQuiz = function () {
+                for (let i = 0; i < QuizN; i++) {
+                    /* i回目のqiuzのスタート 
+                     * ↓ のコードのっぺりでウケてる
+                     */
+                    var q = Quiz[i]
+                    var answers = ["{{q.Choice1}}", "{{q.Choice2}}", "{{q.Choice3}}", "{{q.Choice4}}"];
+                    var CollectAns = "{{q.Answer}}";
+                    var UserAns = "";
+                    var GOING = false;
+
+                    shuffle(answers);
+                    var c1 = "<input type='button' id='choice1' value='" + answers[0];
+                    c1 += "' onclick='judge(UserAns=\"" + answers[0] + "\")'>";
+                    var c2 = "<input type='button' id='choice2' value='" + answers[1];
+                    c2 += "' onclick='judge(UserAns=\"" + answers[1] + "\")'>";
+                    var c3 = "<input type='button' id='choice3' value='" + answers[2];
+                    c3 += "' onclick='judge(UserAns=\"" + answers[2] + "\")'>";
+                    var c4 = "<input type='button' id='choice4' value='" + answers[3];
+                    c4 += "' onclick='judge(UserAns=\"" + answers[3] + "\")'>";
+
+                    document.getElementById("area_choice1").innerHTML = c1;
+                    document.getElementById("area_choice2").innerHTML = c2;
+                    document.getElementById("area_choice3").innerHTML = c3;
+                    document.getElementById("area_choice4").innerHTML = c4;
+                    _ = setTimeout("judge('')", "6000");
+                }
+            }
+
+            var judge = function(UserAns){ 
+                /* 
+                ユーザが答えを入力または制限時間が来たときにその正誤判定を行う 
+                TODO: 正誤判定と正解時間の記録と送信
+                */
+
+                /* タイムアウト検知用のあれこれ */
+                if (GOING) { return; }
+                GOING = true;
+
+                /* 入力するなくそがって処理 */
+                for (let i = 1; i < 5; i++) {
+                    const inp = document.getElementById("area_choice"+i);
+                    inp.disabled = true;
+                    // TODO: あとで有効化
+                }
+                const pos = document.getElementById("JudgePos");
+                switch (UserAns) {
+                    // TODO: innerHTMlに変更
+                    case "":
+                        pos.insertAdjacentHTML("afterbegin", "<h3>Time is over!!!</h3>");
+                        break;
+                    case CollectAns:
+                        pos.insertAdjacentHTML("afterbegin", "<h3>Collect answer!!!</h3>");
+                        break;
+                    default:
+                        pos.insertAdjacentHTML("afterbegin", "<h3>Wrong answer!!!</h3>");
+                        break;
+                }
+                // TODO: finish時の処理
+                if ( {{.NextQuiz}} == "finish" ) {
+                    pos.insertAdjacentHTML("afterend", "<a href='/lobby'>おわおわり</a>");
+                } else {
+                    pos.insertAdjacentHTML("afterend", "<a href='/quiz/{{.RoomID}}/{{.NextQuiz}}'>Go on to the next quiz.</a>");
+                }
+            }
+            function shuffle(arr){
+                /* シャッフルするやつ */
+                for(var i =arr.length-1 ; i>0 ;i--){
+                    var j = Math.floor( Math.random() * (i + 1) );  
+                    [arr[i],arr[j]]=[arr[j],arr[i]]; 
+                }
+            }
+ 
+
+        </script>
+    </body>
+</html>
