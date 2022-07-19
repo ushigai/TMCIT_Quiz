@@ -21,8 +21,9 @@ CREATE TABLE if not EXISTS quizzes (
 	choice1 VARCHAR(255),
 	choice2 VARCHAR(255),
 	choice3 VARCHAR(255),
-	choice4 VARCHAR(255)
-)
+	choice4 VARCHAR(255),
+	PRIMARY KEY (quiz_id)
+);
 
 INSERT INTO rooms(title, subtitle, author, date, comment) 
 			VALUES("1300", "seiji", "ushigai", "2022/07/01", "nandayona");
