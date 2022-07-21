@@ -3,16 +3,21 @@
     
 <body>
     <br><br>
+    	{{.}}
         {{range .}}
-            <tr>{{.Statement}}</tr>
-            <tr>{{.Answer}}</tr>
-            <tr>{{.Choice1}}</tr>
-            <tr>{{.Choice2}}</tr>
-            <tr>{{.Choice3}}</tr>
-            <tr>{{.Choice4}}</tr>
+		{{.Statement}}<br>
+		{{.Answer}}<br>
+		{{.Choice1}}<br>
+		{{.Choice2}}<br>
+		{{.Choice3}}<br>
+		{{.Choice4}}<br>
+		-*-*-*-*-*-*-*-*-*-<br>
         {{end}}
     <br><br>
 </body>
+
+    {{template "footer" .}}
+{{end}}
 
 <!--
     <body onload="start()">
@@ -80,5 +85,3 @@
     </script>
     </body>
 -->
-    {{template "footer" .}}
-{{end}}
