@@ -8,19 +8,16 @@
         <div id="area_choice4"></div>
         
         <div id="area_Judge"></div>
-        <div id="Next"></div>
-        <div id="AnswerTime"></div>
+        <div id="area_Next"></div>
+        <div id="area_AnswerTime"></div>
         <script>
             var StartQuiz_i= function (i) {
                 /* i回目のqiuzのスタート 
                 ↓ のコードのっぺりでウケてる
                 */
-                var area_Judge = document.getElementById("area_Judge");
-                var Next = document.getElementById("Next");
-                var AnswerTime = document.getElementById("AnswerTime");
                 area_Judge.innerHTML = "";
-                Next.innerHTML = "";
-                AnswerTime.innerHTML = "";
+                area_Next.innerHTML = "";
+                area_AnswerTime.innerHTML = "";
 
                 var q = Quiz[i];
                 var answers = [q.choice1, q.choice2, q.choice3, q.choice4];
@@ -34,14 +31,14 @@
                     c += "StartTime="+StartTime+")'>";
                     document.getElementById("area_choice"+i).innerHTML = c;
                 }
-                document.getElementById("area_statement").innerHTML = q.statement;
+                area_statement.innerHTML = q.statement;
                 quiz_i++;
             }
 
             var judge = function(UserAns, StartTime){ 
                 /* 
                 ユーザが答えを入力または制限時間が来たときにその正誤判定を行う 
-                TODO: 正誤判定と正解時間の記録と送信
+                TODO: 正解時間の送信
                 */
                 
                 /* タイムアウト検知用のあれこれ */
@@ -52,7 +49,6 @@
                 for (var i = 1; i < 5; i++) {
                     document.getElementById("choice"+i).disabled = true;
                 }
-                var area_Judge = document.getElementById("area_Judge");
                 switch (UserAns) {
                     case "":
                         area_Judge.innerHTML = "<h3>Time is over!!!</h3>"
@@ -65,18 +61,16 @@
                         area_Judge.innerHTML = "<h3>Wrong answer!!!</h3>"
                         break;
                 }
-                var AnswerTime = document.getElementById("AnswerTime");
-                var Next = document.getElementById("Next");
-                AnswerTime.innerHTML = "回答時間：" + Math.round((performance.now() - StartTime) / 100) / 10 + " 秒";
+                area_AnswerTime.innerHTML = "回答時間：" + Math.round((performance.now() - StartTime) / 100) / 10 + " 秒";
                 if (quiz_i == quiz_N) {
-                    Next.innerHTML = "<h3>おわおわり</h3>";
-			Next.innerHTML += "<a href='/home'>ホームに戻る</a><br>";
-                    Next.innerHTML += "正解率 : " + Ncorrect + " / " + quiz_N;
+                    area_Next.innerHTML = "<h3>おわおわり</h3>";
+                    area_Next.innerHTML += "<a href='/home'>ホームに戻る</a><br>";
+                    area_Next.innerHTML += "正解率 : " + Ncorrect + " / " + quiz_N;
                 } else {
                     GOING = false;
                     CorrectAns = Quiz[quiz_i].Answer;
                     UserAns = "";
-                    Next.innerHTML = "<input type='button' value='つぎへ' onclick='StartQuiz_i(quiz_i)' >"
+                    area_Next.innerHTML = "<input type='button' value='つぎへ' onclick='StartQuiz_i(quiz_i)' >"
                 }
 
             }
@@ -91,28 +85,11 @@
 
             var Quiz = JSON.stringify({{.}});
             Quiz = JSON.parse(Quiz);
-            //var Quiz = [
-                //{
-                    //"QuizID": 1,
-                    //"RoomID": 1,
-                    //"Statement": "TestStatement1-1",
-                    //"Answer": "correct1",
-                    //"Choice1": "correct1",
-                    //"Choice2": "huga1",
-                    //"Choice3": "piyo1",
-                    //"Choice4": "guhe1"
-                //},
-                //{
-                    //"QuizID": 2,
-                    //"RoomID": 1,
-                    //"Statement": "TestStatement1-2",
-                    //"Answer": "correct2",
-                    //"Choice1": "hoge2",
-                    //"Choice2": "huga2",
-                    //"Choice3": "correct2",
-                    //"Choice4": "guhe2"
-                //}
-            //];
+
+            var area_Judge = document.getElementById("area_Judge");
+            var area_Next = document.getElementById("area_Next");
+            var area_AnswerTime = document.getElementById("area_AnswerTime");
+            var area_statement = document.getElementById("area_statement")
             var quiz_i = 0;
             var quiz_N  = Quiz.length;
 
