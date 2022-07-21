@@ -32,6 +32,7 @@
                 document.getElementById("area_choice2").innerHTML = c2;
                 document.getElementById("area_choice3").innerHTML = c3;
                 document.getElementById("area_choice4").innerHTML = c4;
+                // TODO: timeoutの処理をどうにかしなければいけないかもしれなくもない
                 //_ = setTimeout("judge('')", "6000");
                 quiz_i++;
             }
@@ -70,15 +71,14 @@
                 // TODO: finish時の処理
                 if (quiz_i == quiz_N) {
                     console.log("finish");
+                    // ふぃにっしゅ
                 } else {
                     console.log("continue");
+                    // ここでStartQuiz_i()を呼び出すのってあり？
                 }
-                //if ( {{.NextQuiz}} == "finish" ) {
-                    //pos.insertAdjacentHTML("afterend", "<a href='/lobby'>おわおわり</a>");
-                //} else {
-                    //pos.insertAdjacentHTML("afterend", "<a href='/quiz/{{.RoomID}}/{{.NextQuiz}}'>Go on to the next quiz.</a>");
-                //}
+
             }
+
             function shuffle(arr){
                 /* シャッフルするやつ */
                 for(var i =arr.length-1 ; i>0 ;i--){
@@ -86,6 +86,7 @@
                     [arr[i],arr[j]]=[arr[j],arr[i]]; 
                 }
             }
+
             //var Quiz = JSON.stringify({{.}});
             //Quiz = JSON.parse(Quiz);
             var Quiz = [
