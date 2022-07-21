@@ -28,17 +28,15 @@ func (t *Template) Render(w io.Writer, name string, data interface{}, c echo.Con
 	return t.templates.ExecuteTemplate(w, name, data)
 }
 
-type QuizDataStruct struct {
-	RoomID      string
-	QuizID      string
-	QuizText    string
-	QuizAnswer  string
-	QuizTimeout string
-	Choice1     string
-	Choice2     string
-	Choice3     string
-	Choice4     string
-	NextQuiz    string
+type Quiz struct {
+	QuizId    string `json:"quiz_id" param:"quiz_id"`
+	RoomId    int    `json:"room_id"`
+	Statement string `json:"statement"`
+	Answer    string `json:"answer"`
+	Choice1   string `json:"choice1"`
+	Choice2   string `json:"choice2"`
+	Choice3   string `json:"choice3"`
+	Choice4   string `json:"choice4"`
 }
 
 type Room struct {
@@ -51,21 +49,13 @@ type Room struct {
 }
 
 func StartQuiz(c echo.Context) error {
-	// TODO: ここらへんDBと連携する
-	QuizData := QuizDataStruct{
-		RoomID:      c.Param("RoomID"),
-		QuizID:      c.Param("QuizID"),
-		QuizText:    "「家康の康ですよね？」は高専何年生のとき？",
-		QuizAnswer:  "高専2年",
-		QuizTimeout: "6000",
-		Choice1:     "高専1年",
-		Choice2:     "高専2年",
-		Choice3:     "高専3年",
-		Choice4:     "高専4年",
-		NextQuiz:    "finish",
-	}
-
-	return c.Render(http.StatusOK, "quiz", QuizData)
+	db := sqlConnect()
+	quizzes := []Quiz{}
+	id := c.Param("RoomID")
+	db.Raw("select * from quizzes where room_id=" + id).Scan(&quizzes)
+	defer db.Close()
+	fmt.Println(quizzes)
+	return c.Render(http.StatusOK, "quiz", quizzes)
 }
 
 func GetQuiz(c echo.Context) error {
@@ -116,7 +106,7 @@ func main() {
 	e.GET("/lobby/:QuizID", GetQuiz)
 	e.GET("/lobby", GetRoom)
 	e.GET("/room/:RoomID", GetQuiz)
-	e.GET("/quiz/:RoomID/:QuizID", StartQuiz)
+	e.GET("/quiz/:RoomID", StartQuiz)
 
 	e.GET("/", func(c echo.Context) error {
 		return c.String(http.StatusOK, "Here is root :)")

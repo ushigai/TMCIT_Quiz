@@ -1,5 +1,5 @@
-{{define "quiz"}}
-    {{template "header" .}}
+<!DOCTYPE html>
+<html>
     <body>
         <div id="area_statement"></div>
         <div id="area_choice1"></div>
@@ -23,7 +23,7 @@
                 AnswerTime.innerHTML = "";
 
                 var q = Quiz[i];
-                var answers = [q.choice1, q.choice2, q.choice3, q.choice4];
+                var answers = [q.Choice1, q.Choice2, q.Choice3, q.Choice4];
 
                 shuffle(answers);
                 answers.unshift(0);
@@ -34,7 +34,7 @@
                     c += "StartTime="+StartTime+")'>";
                     document.getElementById("area_choice"+i).innerHTML = c;
                 }
-                document.getElementById("area_statement").innerHTML = q.statement;
+                document.getElementById("area_statement").innerHTML = q.Statement;
                 quiz_i++;
             }
 
@@ -70,7 +70,6 @@
                 AnswerTime.innerHTML = "回答時間：" + Math.round((performance.now() - StartTime) / 100) / 10 + " 秒";
                 if (quiz_i == quiz_N) {
                     Next.innerHTML = "<h3>おわおわり</h3>";
-			Next.innerHTML += "<a href='/home'>ホームに戻る</a><br>";
                     Next.innerHTML += "正解率 : " + Ncorrect + " / " + quiz_N;
                 } else {
                     GOING = false;
@@ -89,39 +88,40 @@
                 }
             }
 
-            var Quiz = JSON.stringify({{.}});
-            Quiz = JSON.parse(Quiz);
-            //var Quiz = [
-                //{
-                    //"QuizID": 1,
-                    //"RoomID": 1,
-                    //"Statement": "TestStatement1-1",
-                    //"Answer": "correct1",
-                    //"Choice1": "correct1",
-                    //"Choice2": "huga1",
-                    //"Choice3": "piyo1",
-                    //"Choice4": "guhe1"
-                //},
-                //{
-                    //"QuizID": 2,
-                    //"RoomID": 1,
-                    //"Statement": "TestStatement1-2",
-                    //"Answer": "correct2",
-                    //"Choice1": "hoge2",
-                    //"Choice2": "huga2",
-                    //"Choice3": "correct2",
-                    //"Choice4": "guhe2"
-                //}
-            //];
+            //var Quiz = JSON.stringify({{.}});
+            //Quiz = JSON.parse(Quiz);
+            var Quiz = [
+                {
+                    "QuizID": 1,
+                    "RoomID": 1,
+                    "Statement": "TestStatement1-1",
+                    "Answer": "correct1",
+                    "Choice1": "correct1",
+                    "Choice2": "huga1",
+                    "Choice3": "piyo1",
+                    "Choice4": "guhe1"
+                },
+                {
+                    "QuizID": 2,
+                    "RoomID": 1,
+                    "Statement": "TestStatement1-2",
+                    "Answer": "correct2",
+                    "Choice1": "hoge2",
+                    "Choice2": "huga2",
+                    "Choice3": "correct2",
+                    "Choice4": "guhe2"
+                }
+            ];
             var quiz_i = 0;
+            Quiz = JSON.stringify(Quiz);
+            Quiz = JSON.parse(Quiz);
             var quiz_N  = Quiz.length;
 
             var Ncorrect = 0;
             var GOING = false;
-            var CorrectAns = Quiz[quiz_i].answer;
+            var CorrectAns = Quiz[quiz_i].Answer;
             var UserAns = "";
             StartQuiz_i(quiz_i);
         </script>
     </body>
-    {{template "footer" .}}
-{{end}}
+</html>

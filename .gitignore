@@ -1,7 +1,8 @@
 # local ignore list
 main
-test.go
+test.*
 rebuildDocker.sh
+.env
 
 # Binaries for programs and plugins
 *.exe
