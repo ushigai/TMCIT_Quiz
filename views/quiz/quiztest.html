@@ -8,52 +8,70 @@
         <div id="area_choice4"></div>
         
         <div id="JudgePos"></div>
+        <div id="Next"></div>
+        <div id="AnswerTime"></div>
         <script>
             var StartQuiz_i= function (i) {
                 /* i回目のqiuzのスタート 
                 ↓ のコードのっぺりでウケてる
                 */
-                var q = Quiz[i]
+                var pos = document.getElementById("JudgePos");
+                pos.innerHTML = "";
+                var pos = document.getElementById("Next");
+                pos.innerHTML = "";
+                var pos = document.getElementById("AnswerTime");
+                pos.innerHTML = "";
+
+                var q = Quiz[i];
                 var answers = [q.Choice1, q.Choice2, q.Choice3, q.Choice4];
-                console.log(q);
+                // console.log(q);
 
                 shuffle(answers);
-                var c1 = "<input type='button' id='choice1' value='" + answers[0];
-                c1 += "' onclick='judge(UserAns=\"" + answers[0] + "\")'>";
-                var c2 = "<input type='button' id='choice2' value='" + answers[1];
-                c2 += "' onclick='judge(UserAns=\"" + answers[1] + "\")'>";
-                var c3 = "<input type='button' id='choice3' value='" + answers[2];
-                c3 += "' onclick='judge(UserAns=\"" + answers[2] + "\")'>";
-                var c4 = "<input type='button' id='choice4' value='" + answers[3];
-                c4 += "' onclick='judge(UserAns=\"" + answers[3] + "\")'>";
+                answers.unshift(0);
+                var StartTime = performance.now();
+                for (let i = 1; i < 5; i++) {
+                    var c = "<input type='button' id='choice" + i + "' value='" + answers[i] + "' ";
+                    c += "onclick='judge(UserAns=\"" + answers[i] + "\", ";
+                    c += "StartTime="+StartTime+")'>";
+                    document.getElementById("area_choice"+i).innerHTML = c;
+                    console.log(c);
+                }
+                //var c1 = "<input type='button' id='choice1' value='" + answers[0];
+                //c1 += "' onclick='judge(UserAns=\"" + answers[0] + "\")'>";
+                //var c2 = "<input type='button' id='choice2' value='" + answers[1];
+                //c2 += "' onclick='judge(UserAns=\"" + answers[1] + "\")'>";
+                //var c3 = "<input type='button' id='choice3' value='" + answers[2];
+                //c3 += "' onclick='judge(UserAns=\"" + answers[2] + "\")'>";
+                //var c4 = "<input type='button' id='choice4' value='" + answers[3];
+                //c4 += "' onclick='judge(UserAns=\"" + answers[3] + "\")'>";
 
                 document.getElementById("area_statement").innerHTML = q.Statement;
-                document.getElementById("area_choice1").innerHTML = c1;
-                document.getElementById("area_choice2").innerHTML = c2;
-                document.getElementById("area_choice3").innerHTML = c3;
-                document.getElementById("area_choice4").innerHTML = c4;
+                //document.getElementById("area_choice1").innerHTML = c1;
+                //document.getElementById("area_choice2").innerHTML = c2;
+                //document.getElementById("area_choice3").innerHTML = c3;
+                //document.getElementById("area_choice4").innerHTML = c4;
                 // TODO: timeoutの処理をどうにかしなければいけないかもしれなくもない
                 //_ = setTimeout("judge('')", "6000");
                 quiz_i++;
             }
 
-            var judge = function(UserAns){ 
+            var judge = function(UserAns, StartTime){ 
                 /* 
                 ユーザが答えを入力または制限時間が来たときにその正誤判定を行う 
                 TODO: 正誤判定と正解時間の記録と送信
                 */
                 
-                console.log("Judging...");
+                //console.log("Judging...");
 
                 /* タイムアウト検知用のあれこれ */
                 if (GOING) { return; }
                 GOING = true;
-                console.log("Judging2...");
+                //console.log("Judging2...");
 
                 /* 入力するなくそがって処理 */
-                for (let i = 1; i < 5; i++) {
-                    const inp = document.getElementById("area_choice"+i);
-                    inp.disabled = true;
+                for (var i = 1; i < 5; i++) {
+                    //document.getElementById("area_choice"+toString(i)).disabled = true;
+                    document.getElementById("choice"+i).disabled = true;
                     // TODO: あとで有効化
                 }
                 var pos = document.getElementById("JudgePos");
@@ -61,20 +79,33 @@
                     case "":
                         pos.innerHTML = "<h3>Time is over!!!</h3>"
                         break;
-                    case CollectAns:
-                        pos.innerHTML = "<h3>Collect answer!!!</h3>"
+                    case CorrectAns:
+                        pos.innerHTML = "<h3>Correct answer!!!</h3>"
+                        Ncorrect++;
                         break;
                     default:
                         pos.innerHTML = "<h3>Wrong answer!!!</h3>"
                         break;
                 }
+                var pos = document.getElementById("AnswerTime");
+                pos.innerHTML = (performance.now() - StartTime) / 1000;
                 // TODO: finish時の処理
                 if (quiz_i == quiz_N) {
-                    console.log("finish");
+                    //console.log("finish");
                     // ふぃにっしゅ
+                    var pos = document.getElementById("Next");
+                    pos.innerHTML = "<h3>おわおわり</h3>";
+                    pos.innerHTML += "正解率 : " + Ncorrect + " / " + quiz_N;
                 } else {
-                    console.log("continue");
+                    //console.log("continue");
                     // ここでStartQuiz_i()を呼び出すのってあり？
+                    GOING = false;
+                    CorrectAns = Quiz[quiz_i].Answer;
+                    UserAns = "";
+                    var pos = document.getElementById("Next");
+                    // StartQuiz_i(quiz_i);
+                    // 意外とありかもしれない（凝縮度は知ったこっちゃない）
+                    pos.innerHTML = "<input type='button' value='つぎへ' onclick='StartQuiz_i(quiz_i)' >"
                 }
 
             }
@@ -94,8 +125,8 @@
                     "QuizID": 1,
                     "RoomID": 1,
                     "Statement": "TestStatement1-1",
-                    "Answer": "hoge1",
-                    "Choice1": "hoge1",
+                    "Answer": "correct1",
+                    "Choice1": "correct1",
                     "Choice2": "huga1",
                     "Choice3": "piyo1",
                     "Choice4": "guhe1"
@@ -104,10 +135,10 @@
                     "QuizID": 2,
                     "RoomID": 1,
                     "Statement": "TestStatement1-2",
-                    "Answer": "piyo2",
+                    "Answer": "correct2",
                     "Choice1": "hoge2",
                     "Choice2": "huga2",
-                    "Choice3": "piyo2",
+                    "Choice3": "correct2",
                     "Choice4": "guhe2"
                 }
             ];
@@ -116,8 +147,9 @@
             Quiz = JSON.parse(Quiz);
             var quiz_N  = Quiz.length;
 
+            var Ncorrect = 0;
             var GOING = false;
-            var CollectAns = Quiz[quiz_i].Answer;
+            var CorrectAns = Quiz[quiz_i].Answer;
             var UserAns = "";
             //console.log(Quiz);
             StartQuiz_i(quiz_i);
