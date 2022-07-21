@@ -7,7 +7,7 @@
         <div id="area_choice3"></div>
         <div id="area_choice4"></div>
         
-        <div id="JudgePos"></div>
+        <div id="area_Judge"></div>
         <div id="Next"></div>
         <div id="AnswerTime"></div>
         <script>
@@ -15,16 +15,15 @@
                 /* i回目のqiuzのスタート 
                 ↓ のコードのっぺりでウケてる
                 */
-                var pos = document.getElementById("JudgePos");
-                pos.innerHTML = "";
-                var pos = document.getElementById("Next");
-                pos.innerHTML = "";
-                var pos = document.getElementById("AnswerTime");
-                pos.innerHTML = "";
+                var area_Judge = document.getElementById("area_Judge");
+                var Next = document.getElementById("Next");
+                var AnswerTime = document.getElementById("AnswerTime");
+                area_Judge.innerHTML = "";
+                Next.innerHTML = "";
+                AnswerTime.innerHTML = "";
 
                 var q = Quiz[i];
                 var answers = [q.Choice1, q.Choice2, q.Choice3, q.Choice4];
-                // console.log(q);
 
                 shuffle(answers);
                 answers.unshift(0);
@@ -34,24 +33,8 @@
                     c += "onclick='judge(UserAns=\"" + answers[i] + "\", ";
                     c += "StartTime="+StartTime+")'>";
                     document.getElementById("area_choice"+i).innerHTML = c;
-                    console.log(c);
                 }
-                //var c1 = "<input type='button' id='choice1' value='" + answers[0];
-                //c1 += "' onclick='judge(UserAns=\"" + answers[0] + "\")'>";
-                //var c2 = "<input type='button' id='choice2' value='" + answers[1];
-                //c2 += "' onclick='judge(UserAns=\"" + answers[1] + "\")'>";
-                //var c3 = "<input type='button' id='choice3' value='" + answers[2];
-                //c3 += "' onclick='judge(UserAns=\"" + answers[2] + "\")'>";
-                //var c4 = "<input type='button' id='choice4' value='" + answers[3];
-                //c4 += "' onclick='judge(UserAns=\"" + answers[3] + "\")'>";
-
                 document.getElementById("area_statement").innerHTML = q.Statement;
-                //document.getElementById("area_choice1").innerHTML = c1;
-                //document.getElementById("area_choice2").innerHTML = c2;
-                //document.getElementById("area_choice3").innerHTML = c3;
-                //document.getElementById("area_choice4").innerHTML = c4;
-                // TODO: timeoutの処理をどうにかしなければいけないかもしれなくもない
-                //_ = setTimeout("judge('')", "6000");
                 quiz_i++;
             }
 
@@ -61,51 +44,38 @@
                 TODO: 正誤判定と正解時間の記録と送信
                 */
                 
-                //console.log("Judging...");
-
                 /* タイムアウト検知用のあれこれ */
                 if (GOING) { return; }
                 GOING = true;
-                //console.log("Judging2...");
 
                 /* 入力するなくそがって処理 */
                 for (var i = 1; i < 5; i++) {
-                    //document.getElementById("area_choice"+toString(i)).disabled = true;
                     document.getElementById("choice"+i).disabled = true;
-                    // TODO: あとで有効化
                 }
-                var pos = document.getElementById("JudgePos");
+                var area_Judge = document.getElementById("area_Judge");
                 switch (UserAns) {
                     case "":
-                        pos.innerHTML = "<h3>Time is over!!!</h3>"
+                        area_Judge.innerHTML = "<h3>Time is over!!!</h3>"
                         break;
                     case CorrectAns:
-                        pos.innerHTML = "<h3>Correct answer!!!</h3>"
+                        area_Judge.innerHTML = "<h3>Correct answer!!!</h3>"
                         Ncorrect++;
                         break;
                     default:
-                        pos.innerHTML = "<h3>Wrong answer!!!</h3>"
+                        area_Judge.innerHTML = "<h3>Wrong answer!!!</h3>"
                         break;
                 }
-                var pos = document.getElementById("AnswerTime");
-                pos.innerHTML = (performance.now() - StartTime) / 1000;
-                // TODO: finish時の処理
+                var AnswerTime = document.getElementById("AnswerTime");
+                var Next = document.getElementById("Next");
+                AnswerTime.innerHTML = "回答時間：" + Math.round((performance.now() - StartTime) / 100) / 10 + " 秒";
                 if (quiz_i == quiz_N) {
-                    //console.log("finish");
-                    // ふぃにっしゅ
-                    var pos = document.getElementById("Next");
-                    pos.innerHTML = "<h3>おわおわり</h3>";
-                    pos.innerHTML += "正解率 : " + Ncorrect + " / " + quiz_N;
+                    Next.innerHTML = "<h3>おわおわり</h3>";
+                    Next.innerHTML += "正解率 : " + Ncorrect + " / " + quiz_N;
                 } else {
-                    //console.log("continue");
-                    // ここでStartQuiz_i()を呼び出すのってあり？
                     GOING = false;
                     CorrectAns = Quiz[quiz_i].Answer;
                     UserAns = "";
-                    var pos = document.getElementById("Next");
-                    // StartQuiz_i(quiz_i);
-                    // 意外とありかもしれない（凝縮度は知ったこっちゃない）
-                    pos.innerHTML = "<input type='button' value='つぎへ' onclick='StartQuiz_i(quiz_i)' >"
+                    Next.innerHTML = "<input type='button' value='つぎへ' onclick='StartQuiz_i(quiz_i)' >"
                 }
 
             }
@@ -151,9 +121,7 @@
             var GOING = false;
             var CorrectAns = Quiz[quiz_i].Answer;
             var UserAns = "";
-            //console.log(Quiz);
             StartQuiz_i(quiz_i);
-            console.log(quiz_i);
         </script>
     </body>
 </html>
