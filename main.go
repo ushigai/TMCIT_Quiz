@@ -11,7 +11,6 @@ import (
 	"github.com/jinzhu/gorm"
 	"github.com/joho/godotenv"
 	"github.com/labstack/echo"
-	"github.com/labstack/echo/middleware"
 )
 
 type User struct {
@@ -112,16 +111,15 @@ func main() {
 		return c.String(http.StatusOK, "Here is root :)")
 	})
 
-	g := e.Group("/admin")
-	g.Use(middleware.BasicAuth(func(username, password string, c echo.Context) (bool, error) {
-		if username == "joe" && password == "secret1" {
-			return true, nil
-		}
-		return false, nil
-	}))
+	//g := e.Group("/admin")
+	//g.Use(middleware.BasicAuth(func(username, password string, c echo.Context) (bool, error) {
+	//if username == "joe" && password == "secret1" {
+	//return true, nil
+	//}
+	//return false, nil
+	//}))
 
 	e.Logger.Fatal(e.Start(":8080"))
-
 }
 
 func sqlConnect() (database *gorm.DB) {
@@ -135,14 +133,13 @@ func sqlConnect() (database *gorm.DB) {
 
 	DBMS := "mysql"
 	PROTOCOL := "tcp(db:3306)"
-
 	CONNECT := USER + ":" + PASS + "@" + PROTOCOL + "/" + DBNAME + "?charset=utf8&parseTime=true&loc=Asia%2FTokyo"
 
-	fmt.Println("user : " + USER)
-	fmt.Println("password : " + PASS)
-	fmt.Println("DB name : " + DBNAME)
-	fmt.Println("DBMS : " + DBMS)
-	fmt.Println("protocol : " + PROTOCOL)
+	//fmt.Println("user : " + USER)
+	//fmt.Println("password : " + PASS)
+	//fmt.Println("DB name : " + DBNAME)
+	//fmt.Println("DBMS : " + DBMS)
+	//fmt.Println("protocol : " + PROTOCOL)
 
 	db, err := gorm.Open(DBMS, CONNECT)
 	if err != nil {

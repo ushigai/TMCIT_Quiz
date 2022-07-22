@@ -1,6 +1,6 @@
-CREATE DATABASE if not exists go_database;
+CREATE DATABASE if not exists tmcit_quiz_database;
 
-use go_database;
+use tmcit_quiz_database;
 
 
 CREATE TABLE if not exists rooms (
