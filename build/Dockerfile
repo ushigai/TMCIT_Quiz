@@ -8,5 +8,6 @@ RUN mkdir /go/src/app
 WORKDIR /go/src/app
 # ホストのファイルをコンテナの作業ディレクトリに移行
 ADD . /go/src/app 
-#install
-#RUN go get
+#RUN go install
+RUN go get
+

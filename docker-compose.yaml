@@ -2,22 +2,24 @@ version: "3"
 services:
  goapp:
     container_name: goapp
-    build:
-      dockerfile: ./build/Dockerfile
+    #build:
+    #  dockerfile: ./build/Dockerfile
+    image: shomaigu/zissyu:latest
     ports:
       - 8080:8080
-    volumes:
-      - ./cmd/hello:/go/src/app
+#    volumes:
+#      - ./cmd/hello:/go/src/app
     restart: always
     tty: true
     command: >
-      sh -c 'go get && go run main.go' 
+      sh -c 'go run main.go' 
 
  db:
     restart: always
-    build:
-      context: ./
-      dockerfile: ./db/Dockerfile
+    image: shomaigu/zissyu_db:latest
+#    build:
+#      context: ./
+#      dockerfile: ./db/Dockerfile
     container_name: mariadb
     environment:
       MARIADB_ROOT_PASSWORD: tmcit
@@ -27,8 +29,8 @@ services:
       TZ: 'Asia/Tokyo'
     volumes:
       - ./db/data:/var/lib/mysql
-      - ./db/my.cnf:/etc/mysql/conf.d/my.cnf
-      - ./initdb.d/:/docker-entrypoint-initdb.d
+     # - ./db/my.cnf:/etc/mysql/my.cnf
+     # - ./initdb.d/:/docker-entrypoint-initdb.d
     command: --default-authentication-plugin=mysql_native_password --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci    
     ports:
       - 3306:3306

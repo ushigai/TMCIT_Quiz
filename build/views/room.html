@@ -1,0 +1,17 @@
+{{define "room"}}
+    {{template "header" .}}
+    <br><br>
+    ルーム番号：{{.RoomID}}<br>
+    クイズ名：{{.QuizTitle}}<br>
+    サブタイトル：{{.QuizSubTitle}}<br>
+    作者：{{.Author}}<br>
+    作成日：{{.Date}}<br>
+    コメント：{{.Comment}}<br>
+    <br>
+    <a href="/quiz/{{.RoomID}}/1">
+        <button type="button">クイズを開始する</button>
+    </a>
+    <br><br>
+    {{template "footer" .}}
+{{end}}
+
