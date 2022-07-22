@@ -4,7 +4,7 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-		<title>"K"</title>
+		<title>小早川研発表</title>
 
 		<link rel="stylesheet" href="dist/reset.css">
 		<link rel="stylesheet" href="dist/reveal.css">
@@ -21,78 +21,106 @@
 	<body>
 		<div class="reveal">
 			<div class="slides">
+
 <section>
 	<h2>小早川研究室</h2>
-	<h3>いやいや4択クイズでしょ</h3>
+	<h5>井口、大竹、山本</h3>
 </section>
-<section data-transition="convex">
-	<section data-markdown="">
-		### 要件
-		- 授業内にて使用できる
-		- ユーザは先生か生徒の2種類
-		- 大人数で使用できる
-		- 問題を自分で作成できる
-		- ランキングの機能がある
-	</section>
-</section>
-<section data-transition="convex">
-	<section data-markdown="">
-		### 要件
-		- 授業内にて使用できる
-		- ユーザは先生か生徒の2種類
-		- 大人数で使用できる
-		- 問題を自分で作成できる
-		- ランキングの機能がある
-	</section>
-</section>
-<section data-transition="convex">
-	<section data-markdown="">
-		### 要件
-		- 授業内にて使用できる
-		- ユーザは先生か生徒の2種類
-		- 大人数で使用できる
-		- 問題を自分で作成できる
-		- ランキングの機能がある
-	</section>
-	<section data-markdown="">
-		```bash [1-2|3|4]
-		a = 
-		print("Hello world!")
-		hoge
-		huga
-		```
-	</section>
-</section>
-<section data-markdown>
-	<textarea data-template>
-### テーマ
-	</textarea>
-</section>
-<section data-markdown>
-	<textarea data-template>
-### 役割と担当
 
-	</textarea>
+<section>
+	<section data-markdown="">
+		### テーマ
+		### 四択クイズ
+	</section>
+	<section data-markdown="">
+		### yayyay四択クイズでshow
+	</section>
+
 </section>
-<section data-markdown>
-	<textarea data-template>
-### ヒアリングの内容
-	</textarea>
+
+<section>
+	<section data-markdown="">
+	## 役割と担当
+	</section>
+	<section data-markdown="">
+		| 種類 | タスク | 概要 | 割当 |
+		| -------- | -------- | -------- | -------- |
+		| バックエンド|Docker-compose|docker-composeを用いて環境を構築|井口|
+		| バックエンド|Dockerfile|本番環境へデプロイの為|井口|
+	</section>
+	<section data-markdown="">
+		| 種類 | タスク | 概要 | 割当 |
+		| -------- | -------- | -------- | -------- |
+		| バックエンド| kubernetes | kubernetesへ移植 |井口|
+		| バックエンド| Goアプリ| アプリケーションの開発 |大竹|
+	</section>
+	<section data-markdown="">
+		| 種類 | タスク | 概要 | 割当 |
+		| -------- | -------- | -------- | -------- |
+		| フロントエンド| DB設計 | DBの設計 |大竹|
+		| デザイン| HTML,CSS | アプリの装飾 |山本|
+	</section>
 </section>
+<section>
+	<section data-markdown="">
+		### ヒヤリング
+		- 授業内にて使用できる
+		- ユーザは先生か生徒の2種類
+		- 大人数で使用できる
+		- 問題を自分で作成できる
+		- ランキングの機能がある
+	</section>
+	<section data-markdown="">
+	### 授業内にて使用出来る
+	ノートＰＣ、スマホからアクセス
+	</section>
+	<section data-markdown="">
+	### アカウント管理
+	ユーザーアカウントの種類は”先生”か”生徒”
+	</section>
+	<section data-markdown="">
+	### 問題を自分で作成出来る
+	アカウント”先生”を選択で問題作成可能
+	</section>
+	<section data-markdown="">
+	### ランキング機能
+	モチベーション向上の為
+	</section>
+	<section data-markdown="">
+	```bash [1-2|3|4]
+	a = 
+	print("Hello world!")
+	hoge
+	huga
+	```
+	</section>
+</section>
+
 <section data-markdown>
-	<textarea data-template>
 ### 機能一覧
-	</textarea>
 </section>
-<section data-markdown>
-	<textarea data-template>
-### 技術スタック
-	</textarea>
+
+<section>
+	<section data-markdown="">
+		## 技術スタック
+	</section>
+	<section data-markdown="">
+		#### 使用したソフトウェア
+		| ソフト | ミドルウェア |
+		| -------- | -------- |
+		| DB     | mariadb |
+		| アプリケーション|Go|
+	</section>
+	<section data-markdown="">
+		#### インフラアーキテクチャ図
+		![infra_architecture](img/infra_architecture.png)
+	</section>
 </section>
+
 <section data-markdown>
-	<textarea data-template>
-### 反省点など
-	</textarea>
+### 反省点
+- アプリ自体の作成までに時間がかかった
+- デザインが出来る人材がいなかった
 </section>
 
 
@@ -116,3 +144,4 @@
 		</script>
 	</body>
 </html>
+
