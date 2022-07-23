@@ -1,2 +1,0 @@
-# TMCIT_Quiz
-やるぞ
