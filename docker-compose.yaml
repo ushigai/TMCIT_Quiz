@@ -23,7 +23,7 @@ services:
     volumes:
       - ./init:/docker-entrypoint-initdb.d
         #- db-data:/var/lib/mysql
-        #- ./db/my.cnf:/etc/mysql/conf.d/my.cnf
+      - ./db/my.cnf:/etc/mysql/conf.d/my.cnf
     ports:
       - 3306:3306
 
