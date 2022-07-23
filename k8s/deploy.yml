@@ -1,0 +1,69 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: goapp
+  name: goapp
+  namespace: kobayakawake
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: goapp
+  template:
+    metadata:
+      labels:
+        app: goapp
+    spec:
+      containers:
+      - image: shomaigu/zissyu:latest
+        name: zissyu
+        command: ["/bin/sh","-c"]
+        args: ["go run main.go"]
+#        args: ["find / -name footer.html && pwd && ls"]
+
+#        volumeMounts:
+#        - name: my-volume
+#          mountPath: /go/src/app
+        ports:
+          - containerPort: 8080
+
+#      volumes:
+#      - name: my-volume
+#        hostPath:
+#          path: /home/shoma/zi/zissyu/k8s/cmd/hello
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: db
+  name: db
+  namespace: kobayakawake
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: db
+  template:
+    metadata:
+      labels:
+        app: db
+    spec:
+      containers:
+      - image: shomaigu/zissyu_db:latest
+        name: db
+        ports:
+        - containerPort: 3306
+        env:
+        - name: MARIADB_ROOT_PASSWORD
+          value: "tmcit"
+        - name: MARIADB_USER
+          value: "tmcit"
+        - name: MARIADB_PASSWORD
+          value: "tmcit"
+      volumes:
+      - name: database
+        hostPath:
+          path: /data
