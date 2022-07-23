@@ -1,68 +1,138 @@
 {{define "quiz"}}
-    {{template "header" .}}
-    <body onload="start()">
-    <p>{{.QuizText}}</p>
-    <div id="area1"></div>
-    <div id="area2"></div>
-    <div id="area3"></div>
-    <div id="area4"></div>
-    <div id="JudgePos"></div>
-    <script>
-        var answers = ["{{.Choice1}}", "{{.Choice2}}", "{{.Choice3}}", "{{.Choice4}}"];
-        var CollectAns = "{{.QuizAnswer}}";
-        var UserAns = "";
-        var GOING = false;
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>クイズ</title>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+<link rel="stylesheet" href="style.css">
+</head>
 
-        var start = function () {
+<body>
+    <div id="container">
+        <header>
+            <h1 id="logo"><a href="index.html"><img src="logo2.png" alt="Simple Site"></a></h1>
+        </header>
+
+        <nav id="menubar">
+            <ul>
+                <li><a href="home.html">Home</a></li>
+                <li><a href="lobby.html">Lobby</a></li>
+                <li><a href="room.html">Quizu</a></li>
+                <li><a href="index.html">FAQs</a></li>
+            </ul>
+        </nav>
+        <section id="quizu">
+            <h2 id="area_statement"></h2>
+            <div class="row">
+                <div class="col">
+                    <div id="area_choice1"></div>
+                </div>
+                <div class="col">
+                    <div id="area_choice2"></div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <div id="area_choice3"></div>
+                </div>
+                <div class="col">
+                    <div id="area_choice4"></div>
+                </div>
+            </div>
+        </section>
+        <h2 id="area_Judge"></h2>
+        <div id="area_Next"></div>
+        <div id="area_AnswerTime"></div>
+    </div>
+    <script>
+        var StartQuiz_i= function (i) {
+            /* i回目のqiuzのスタート 
+            ↓ のコードのっぺりでウケてる
+            */
+            area_Judge.innerHTML = "";
+            area_Next.innerHTML = "";
+            area_AnswerTime.innerHTML = "";
+
+            var q = Quiz[i];
+            var answers = [q.choice1, q.choice2, q.choice3, q.choice4];
+
             shuffle(answers);
-            var str1 = "<input type='button' id='choice1' value='" + answers[0];
-            str1 += "' onclick='judge(UserAns=\"" + answers[0] + "\")'>";
-            var str2 = "<input type='button' id='choice2' value='" + answers[1];
-            str2 += "' onclick='judge(UserAns=\"" + answers[1] + "\")'>";
-            var str3 = "<input type='button' id='choice3' value='" + answers[2];
-            str3 += "' onclick='judge(UserAns=\"" + answers[2] + "\")'>";
-            var str4 = "<input type='button' id='choice4' value='" + answers[3];
-            str4 += "' onclick='judge(UserAns=\"" + answers[3] + "\")'>";
-            document.getElementById("area1").innerHTML = str1;
-            document.getElementById("area2").innerHTML = str2;
-            document.getElementById("area3").innerHTML = str3;
-            document.getElementById("area4").innerHTML = str4;
-            _ = setTimeout("judge('')", {{ .QuizTimeout }});
-        }
-        var judge = function(UserAns){ 
-            if (GOING) {
-                return
-            }
-            GOING = true;
+            answers.unshift(0);
+            var StartTime = performance.now();
             for (let i = 1; i < 5; i++) {
-                const inp = document.getElementById("choice"+i);
-                inp.disabled = true;
+                var c = "<input type='button' class='btn btn-outline-primary btn-block' id='choice" + i + "' value='" + answers[i] + "' ";
+                c += "onclick='judge(UserAns=\"" + answers[i] + "\", ";
+                c += "StartTime="+StartTime+")'>";
+                document.getElementById("area_choice"+i).innerHTML = c;
             }
-            const pos = document.getElementById("JudgePos");
+            area_statement.innerHTML = q.statement;
+            quiz_i++;
+        }
+
+        var judge = function(UserAns, StartTime){ 
+            /* 
+            ユーザが答えを入力または制限時間が来たときにその正誤判定を行う 
+            TODO: 正解時間の送信
+            */
+            
+            /* タイムアウト検知用のあれこれ */
+            if (GOING) { return; }
+            GOING = true;
+
+            /* 入力するなくそがって処理 */
+            for (var i = 1; i < 5; i++) {
+                document.getElementById("choice"+i).disabled = true;
+            }
             switch (UserAns) {
                 case "":
-                    pos.insertAdjacentHTML("afterbegin", "<h3>Time is over!!!</h3>");
+                    area_Judge.innerHTML = "<h3>Time is over!!!</h3>"
                     break;
-                case CollectAns:
-                    pos.insertAdjacentHTML("afterbegin", "<h3>Collect answer!!!</h3>");
+                case CorrectAns:
+                    area_Judge.innerHTML = "<h3>Correct answer!!!</h3>"
+                    Ncorrect++;
                     break;
                 default:
-                    pos.insertAdjacentHTML("afterbegin", "<h3>Wrong answer!!!</h3>");
+                    area_Judge.innerHTML = "<h3>Wrong answer!!!</h3>"
                     break;
             }
-            if ( {{.NextQuiz}} == "finish" ) {
-                pos.insertAdjacentHTML("afterend", "<a href='/lobby'>おわおわり</a>");
+            area_AnswerTime.innerHTML = "回答時間：" + Math.round((performance.now() - StartTime) / 100) / 10 + " 秒";
+            if (quiz_i == quiz_N) {
+                area_Next.innerHTML = "<h3>おわおわり</h3>";
+                area_Next.innerHTML += "<a href='/home'>ホームに戻る</a><br>";
+                area_Next.innerHTML += "正解率 : " + Ncorrect + " / " + quiz_N;
             } else {
-                pos.insertAdjacentHTML("afterend", "<a href='/quiz/{{.RoomID}}/{{.NextQuiz}}'>Go on to the next quiz.</a>");
+                GOING = false;
+                CorrectAns = Quiz[quiz_i].Answer;
+                UserAns = "";
+                area_Next.innerHTML = "<input type='button' class='btn btn-outline-primary btn-block' value='つぎへ' onclick='StartQuiz_i(quiz_i)' >"
             }
+
         }
+
         function shuffle(arr){
+            /* シャッフルするやつ */
             for(var i =arr.length-1 ; i>0 ;i--){
                 var j = Math.floor( Math.random() * (i + 1) );  
                 [arr[i],arr[j]]=[arr[j],arr[i]]; 
             }
         }
+
+        var Quiz = JSON.stringify({{.}});
+        Quiz = JSON.parse(Quiz);
+
+        var area_Judge = document.getElementById("area_Judge");
+        var area_Next = document.getElementById("area_Next");
+        var area_AnswerTime = document.getElementById("area_AnswerTime");
+        var area_statement = document.getElementById("area_statement")
+        var quiz_i = 0;
+        var quiz_N  = Quiz.length;
+
+        var Ncorrect = 0;
+        var GOING = false;
+        var CorrectAns = Quiz[quiz_i].answer;
+        var UserAns = "";
+        StartQuiz_i(quiz_i);
     </script>
-    </body>
-    {{template "footer" .}}
+</body>
 {{end}}
