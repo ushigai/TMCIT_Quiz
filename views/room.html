@@ -1,17 +1,47 @@
 {{define "room"}}
-    {{template "header" .}}
-    <br><br>
-    ルーム番号：{{.RoomID}}<br>
-    クイズ名：{{.QuizTitle}}<br>
-    サブタイトル：{{.QuizSubTitle}}<br>
-    作者：{{.Author}}<br>
-    作成日：{{.Date}}<br>
-    コメント：{{.Comment}}<br>
-    <br>
-    <a href="/quiz/{{.RoomID}}/1">
-        <button type="button">クイズを開始する</button>
-    </a>
-    <br><br>
-    {{template "footer" .}}
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>クイズ</title>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+<link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+    <div id="container">
+        <header>
+            <h1>いやいや4択クイズでしょ</h1>
+        </header>
+
+        <nav id="menubar">
+            <ul>
+                <li><a href="home.html">Home</a></li>
+                <li><a href="lobby.html">Lobby</a></li>
+                <li><a href="room.html">Quizu</a></li>
+                <li><a href="index.html">FAQs</a></li>
+            </ul>
+        </nav>
+        <section id="start">
+            <div class="row">
+                <div class="col text-center">
+            	    <br><br>
+            	    ルーム番号：{{.RoomID}}<br>
+            	    クイズ名：{{.QuizTitle}}<br>
+    	    	    サブタイトル：{{.QuizSubTitle}}<br>
+    	   	    作者：{{.Author}}<br>
+    	    	    作成日：{{.Date}}<br>
+            	    コメント：{{.Comment}}<br>
+    	    	    <br>
+            	    <a href="/quiz/{{.RoomID}}/1">
+            	   	<button type="button">クイズを開始する</button>
+    	    	   </a>
+    	           <br><br>
+	        </div>
+	    </div>
+	</section>
+    </div>
+</body>
 {{end}}
 

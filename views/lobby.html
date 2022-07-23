@@ -1,29 +1,38 @@
 {{define "lobby"}}
-    {{template "header" .}}
-    <body onload="ViewRooms()">
-    <br><br>
-        <div id="pos"></div>
-        <script>
-            var RoomData = JSON.stringify({{.}});
-            RoomData = JSON.parse(RoomData);
-            var RoomN = RoomData.length;
-            var RoomHTMLBase = `<br>
-            <a href="/room/ROOM_ID">【QUIZ_TITLE】QUIZ_SUB_TITLE</a>
-            <br>`;
-            var ViewRooms = function() {
-                const pos = document.getElementById("pos");
-                for (let i = 0; i < RoomData.length; i++) {
-                    var RoomHTML = RoomHTMLBase.replace("ROOM_ID", RoomData[i].RoomID)
-                    RoomHTML = RoomHTML.replace("QUIZ_TITLE", RoomData[i].QuizTitle)
-                    RoomHTML = RoomHTML.replace("QUIZ_SUB_TITLE", RoomData[i].QuizSubTitle)
-                    console.log(RoomData[i].QuizSubTitle)
-                    pos.insertAdjacentHTML("afterend", RoomHTML)
-                }
-            }
-        </script>
-    <br><br>
-    </body>
-    {{template "footer" .}}
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>クイズ</title>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div id="container">
+        <header>
+            <h1 id="logo"><a href="index.html"><img src="logo2.png" alt="Simple Site"></a></h1>
+        </header>
+
+        <nav id="menubar">
+            <ul>
+                <li><a href="home.html">Home</a></li>
+                <li><a href="lobby.html">Lobby</a></li>
+                <li><a href="room.html">Quizu</a></li>
+                <li><a href="index.html">FAQs</a></li>
+            </ul>
+        </nav>
+
+        <section id="lobby">
+	    {{ range . }}
+		<tr>
+		    <a href="/room/{{ .Id }}">【{{ .Title }}】{{ .Subtitle }}</a><br>
+		</tr>
+	    {{end}}
+            <br><br>
+	</section>
+    </div>
+</body>
 {{end}}
 
 
