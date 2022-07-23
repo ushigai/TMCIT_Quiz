@@ -1,26 +1,11 @@
 {{define "lobby"}}
     {{template "header" .}}
-    <body onload="ViewRooms()">
-    <br><br>
-        <div id="pos"></div>
-        <script>
-            var RoomData = JSON.stringify({{.}});
-            RoomData = JSON.parse(RoomData);
-            var RoomN = RoomData.length;
-            var RoomHTMLBase = `<br>
-            <a href="/room/ROOM_ID">【QUIZ_TITLE】QUIZ_SUB_TITLE</a>
-            <br>`;
-            var ViewRooms = function() {
-                const pos = document.getElementById("pos");
-                for (let i = 0; i < RoomData.length; i++) {
-                    var RoomHTML = RoomHTMLBase.replace("ROOM_ID", RoomData[i].RoomID)
-                    RoomHTML = RoomHTML.replace("QUIZ_TITLE", RoomData[i].QuizTitle)
-                    RoomHTML = RoomHTML.replace("QUIZ_SUB_TITLE", RoomData[i].QuizSubTitle)
-                    console.log(RoomData[i].QuizSubTitle)
-                    pos.insertAdjacentHTML("afterend", RoomHTML)
-                }
-            }
-        </script>
+    <body>
+	{{ range . }}
+		<tr>
+		    <a href="/room/{{ .Id }}">【{{ .Title }}】{{ .Subtitle }}</a><br>
+		</tr>
+	{{end}}
     <br><br>
     </body>
     {{template "footer" .}}
