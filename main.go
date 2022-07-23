@@ -127,7 +127,8 @@ func main() {
 		}
 		return false, nil
 	}))
-
+    e.Static("/css","css")
+    e.Static("/image","image")
     e.Logger.Fatal(e.Start(":8080"))
 
 }
