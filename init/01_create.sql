@@ -26,7 +26,7 @@ CREATE TABLE if not EXISTS quizzes (
 );
 
 INSERT INTO rooms(title, subtitle, author, date, comment) 
-			VALUES("1300", "seiji", "ushigai", "2022/07/01", "nandayona");
+			VALUES("1300", "せいじ", "ushigai", "2022/07/01", "なんだよなぁ");
 INSERT INTO rooms(title, subtitle, author, date, comment) 
 			VALUES("1300", "kids", "shoma", "2022/07/02", "shoma kami");
 
