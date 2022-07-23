@@ -6,6 +6,8 @@ docker image push shomaigu/zissyu:latest
 sleep 10
 
 sudo -u pi kubectl delete -f /home/pi/go_app/hon/TMCIT_Quiz/k8s/deploy.yml -f /home/pi/go_app/hon/TMCIT_Quiz/k8s/nodeport.yml
+sleep 10
 sudo -u pi kubectl apply -f /home/pi/go_app/hon/TMCIT_Quiz/k8s/deploy.yml -f /home/pi/go_app/hon/TMCIT_Quiz/k8s/nodeport.yml
+sleep 10
 sudo -u pi kubectl get pod
 sudo -u pi kubectl get svc
