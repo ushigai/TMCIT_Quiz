@@ -57,4 +57,3 @@ INSERT INTO quizzes(room_id, statement, answer, choice1, choice2, choice3, choic
 VALUES(3, "10月の天気がいい日（気温22℃前後）で東京朝9時出発、車2時間以内で出かける場所と言えば？", "752", "宇都宮", "北海道", "ノストラダムス", "752");
 INSERT INTO quizzes(room_id, statement, answer, choice1, choice2, choice3, choice4)
 VALUES(3, "魔人拳でガークラしたよ", "帰る", "帰る", "帰る", "帰る", "帰る");
-INSERT INTO quizzes(room_id, statement, answer, choice1, choice2, choice3, choice4)
