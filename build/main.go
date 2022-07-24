@@ -79,7 +79,9 @@ func GetRoom(c echo.Context) error {
 }
 
 func main() {
-	time.Sleep(time.second * 30)
+	for i := 0; i < 30; i++ {
+        time.Sleep(time.Second * 1)
+	}
 	db := sqlConnect()
 	db.AutoMigrate(&User{})
 	defer db.Close()
