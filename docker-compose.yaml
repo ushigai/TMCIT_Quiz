@@ -14,10 +14,10 @@ services:
   db:
     image: mysql:8.0
     environment:
-      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
-      MYSQL_DATABASE: ${DB_NAME}
-      MYSQL_USER: ${DB_USER}
-      MYSQL_PASSWORD: ${DB_PASSWORD}
+      MYSQL_ROOT_PASSWORD: tmcit
+      MYSQL_DATABASE: tmcit_quiz_database
+      MYSQL_USER: tmcit
+      MYSQL_PASSWORD: tmcit
       TZ: 'Asia/Tokyo'
       #command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
     volumes:

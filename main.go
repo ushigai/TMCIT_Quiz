@@ -5,11 +5,10 @@ import (
 	"html/template"
 	"io"
 	"net/http"
-	"os"
+	"time"
 
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/jinzhu/gorm"
-	"github.com/joho/godotenv"
 	"github.com/labstack/echo"
 )
 
@@ -80,6 +79,9 @@ func GetRoom(c echo.Context) error {
 }
 
 func main() {
+	for i := 0; i < 30; i++ {
+        time.Sleep(time.Second * 1)
+	}
 	db := sqlConnect()
 	db.AutoMigrate(&User{})
 	defer db.Close()
@@ -126,14 +128,21 @@ func main() {
 }
 
 func sqlConnect() (database *gorm.DB) {
-	err := godotenv.Load()
-	if err != nil {
-		panic(err.Error())
-	}
-	USER := os.Getenv("DB_USER")
-	PASS := os.Getenv("DB_PASSWORD")
-	DBNAME := os.Getenv("DB_NAME")
+	//err := godotenv.Load()
+	//if err != nil {
+	//	panic(err.Error())
+	//}
+	
+	//USER := os.Getenv("DB_USER")
+	//PASS := os.Getenv("DB_PASSWORD")
+	//DBNAME := os.Getenv("DB_NAME")
 
+	USER := "tmcit"
+	PASS := "tmcit"
+	DBNAME := "tmcit_quiz_database"
+
+	
+	
 	DBMS := "mysql"
 	PROTOCOL := "tcp(db:3306)"
 	CONNECT := USER + ":" + PASS + "@" + PROTOCOL + "/" + DBNAME + "?charset=utf8&parseTime=true&loc=Asia%2FTokyo"
