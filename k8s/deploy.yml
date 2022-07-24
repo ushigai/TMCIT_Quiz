@@ -32,6 +32,7 @@ spec:
 #      - name: my-volume
 #        hostPath:
 #          path: /home/shoma/zi/zissyu/k8s/cmd/hello
+
 ---
 
 apiVersion: apps/v1
