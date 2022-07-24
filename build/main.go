@@ -5,6 +5,7 @@ import (
 	"html/template"
 	"io"
 	"net/http"
+	"time"
 
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/jinzhu/gorm"
@@ -78,6 +79,7 @@ func GetRoom(c echo.Context) error {
 }
 
 func main() {
+	time.Sleep(time.second * 30)
 	db := sqlConnect()
 	db.AutoMigrate(&User{})
 	defer db.Close()
