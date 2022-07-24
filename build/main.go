@@ -122,10 +122,10 @@ func main() {
 }
 
 func sqlConnect() (database *gorm.DB) {
-	err := godotenv.Load()
-	if err != nil {
-		panic(err.Error())
-	}
+	//err := godotenv.Load()
+	//if err != nil {
+	//	panic(err.Error())
+	//}
 	
 	//USER := os.Getenv("DB_USER")
 	//PASS := os.Getenv("DB_PASSWORD")
