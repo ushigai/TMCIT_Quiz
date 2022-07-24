@@ -8,3 +8,4 @@ RUN go install
 
 CMD ["go", "run", "main.go"]
 
+
