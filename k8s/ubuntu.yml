@@ -16,8 +16,8 @@ spec:
         app: ubuntu
     spec:
       containers:
-      - image: ubuntu:18.04
+      - image: shomaigu/ubuntu:latest
         tty: true
         name: ubuntu
         command: ["/bin/sh","-c"]
-        args: ["apt-get -y update && apt-get -y install iputils-ping net-tools dnsutils && ping db"]
+        args: ["ping db"]
