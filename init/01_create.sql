@@ -26,31 +26,19 @@ CREATE TABLE if not EXISTS quizzes (
 );
 
 INSERT INTO rooms(title, subtitle, author, date, comment) 
-			VALUES("1300", "せいじ", "ushigai", "2022/07/01", "なんだよなぁ");
-INSERT INTO rooms(title, subtitle, author, date, comment) 
-			VALUES("1300", "kids", "shoma", "2022/07/02", "shoma kami");
-INSERT INTO rooms(title, subtitle, author, date, comment) 
 			VALUES("5400", "海上先生", "broccoli", "2022/07/24", "後期期末試験");	
 INSERT INTO rooms(title, subtitle, author, date, comment) 
 			VALUES("5400", "黒木さん", "broccoli", "2022/07/24", "後期期末試験");	
 
 INSERT INTO quizzes(room_id, statement, answer, choice1, choice2, choice3, choice4)
-VALUES(1, "test statement 1-1", "test answer", "test choice1", "test choice2", "test choice1", "test choice2");
+VALUES(1, "蓄電池のスペルを答えよ 3-1", "storage battery", "storge battery", "storage battery", "strage battery", "storege battery");
 INSERT INTO quizzes(room_id, statement, answer, choice1, choice2, choice3, choice4)
-VALUES(1, "test statement 1-2", "test answer", "test choice1", "test choice2", "test choice1", "test choice2");
+VALUES(1, "発電のスペルを答えよ 3-2", "power generation", "power generate", "power generating", "power generation", "power generated");
 INSERT INTO quizzes(room_id, statement, answer, choice1, choice2, choice3, choice4)
-VALUES(2, "test statement 2-1", "test answer", "test choice1", "test choice2", "test choice1", "test choice2");
+VALUES(1, "変電所のスペルを答えよ 3-3", "substation", "substation", "life span", "rectify", "fluctuations");
 INSERT INTO quizzes(room_id, statement, answer, choice1, choice2, choice3, choice4)
-VALUES(2, "test statement 2-2", "test answer", "test choice1", "test choice2", "test choice1", "test choice2");
+VALUES(2, "OSPFの正式名称 4-1", "Open Shortest Path First", "Open Start Protocol Fuck", "Open Short Protocol Friends", "Opening Sample Prototype Fast", "Open Shortest Path First");
 INSERT INTO quizzes(room_id, statement, answer, choice1, choice2, choice3, choice4)
-VALUES(3, "蓄電池のスペルを答えよ 3-1", "storage battery", "storge battery", "storage battery", "strage battery", "storege battery");
+VALUES(2, "STPの正式名称 4-2", "Spanning Tree Protocol", "Spanning Tree Protocol", "Special Thanks Price", "Smart Telephone Protocol", "Step Trun Pumpkin");
 INSERT INTO quizzes(room_id, statement, answer, choice1, choice2, choice3, choice4)
-VALUES(3, "発電のスペルを答えよ 3-2", "power generation", "power generate", "power generating", "power generation", "power generated");
-INSERT INTO quizzes(room_id, statement, answer, choice1, choice2, choice3, choice4)
-VALUES(3, "変電所のスペルを答えよ 3-3", "substation", "substation", "life span", "rectify", "fluctuations");
-INSERT INTO quizzes(room_id, statement, answer, choice1, choice2, choice3, choice4)
-VALUES(4, "OSPFの正式名称 4-1", "Open Shortest Path First", "Open Start Protocol Fuck", "Open Short Protocol Friends", "Opening Sample Prototype Fast", "Open Shortest Path First");
-INSERT INTO quizzes(room_id, statement, answer, choice1, choice2, choice3, choice4)
-VALUES(4, "STPの正式名称 4-2", "Spanning Tree Protocol", "Spanning Tree Protocol", "Special Thanks Price", "Smart Telephone Protocol", "Step Trun Pumpkin");
-INSERT INTO quizzes(room_id, statement, answer, choice1, choice2, choice3, choice4)
-VALUES(4, "DHCPの正式名称 4-3", "Dynamic Host Configuration Protocol", "Dynamic Host Configuration Protocol", "Dance Hop Control Protocol", "Dream Hyper Clone Proctocol", "Dokidoki Hassuru Coreppoi Protocol");
+VALUES(2, "DHCPの正式名称 4-3", "Dynamic Host Configuration Protocol", "Dynamic Host Configuration Protocol", "Dance Hop Control Protocol", "Dream Hyper Clone Proctocol", "Dokidoki Hassuru Coreppoi Protocol");
