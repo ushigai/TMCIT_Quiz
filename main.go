@@ -119,6 +119,9 @@ func main() {
 	//return false, nil
 	//}))
 
+	e.Static("/css", "./views/css")
+	e.Static("/image", "./views/image")
+
 	e.Logger.Fatal(e.Start(":8080"))
 }
 
