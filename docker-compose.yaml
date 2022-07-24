@@ -20,17 +20,17 @@ services:
 #    build:
 #      context: ./
 #      dockerfile: ./db/Dockerfile
-    container_name: mariadb
+    container_name: db
     environment:
       MARIADB_ROOT_PASSWORD: tmcit
-      MARIADB_DATABASE: ques
+      MARIADB_DATABASE: tmcit_quiz_database
       MARIADB_USER: tmcit
       MARIADB_PASSWORD: tmcit
       TZ: 'Asia/Tokyo'
     volumes:
-      - ./db/data:/var/lib/mysql
-     # - ./db/my.cnf:/etc/mysql/my.cnf
+    #  - ./db/data:/var/lib/mysql
+     #  - ./db/my.cnf:/etc/mysql/my.cnf
      # - ./initdb.d/:/docker-entrypoint-initdb.d
-    command: --default-authentication-plugin=mysql_native_password --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci    
+    #command: --default-authentication-plugin=mysql_native_password --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci    
     ports:
       - 3306:3306
