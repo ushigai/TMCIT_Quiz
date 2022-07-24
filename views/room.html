@@ -27,21 +27,21 @@
         <section id="start">
             <div class="row">
                 <div class="col text-center">
-            	    <br><br>
-            	    ルーム番号：{{.Id}}<br>
-            	    クイズ名：{{.Title}}<br>
-    	    	    サブタイトル：{{.SubTitle}}<br>
-    	   	    作者：{{.Author}}<br>
-    	    	    作成日：{{.Date}}<br>
-            	    コメント：{{.Comment}}<br>
-    	    	    <br>
-            	    <a href="/quiz/{{.Id}}">
-            	   	<button type="button">クイズを開始する</button>
-    	    	   </a>
-    	           <br><br>
-	        </div>
-	    </div>
-	</section>
+					<br><br>
+					ルーム番号：{{.Id}}<br>
+					クイズ名：{{.Title}}<br>
+					サブタイトル：{{.Subtitle}}<br>
+					作者：{{.Author}}<br>
+					作成日：{{.Date}}<br>
+					コメント：{{.Comment}}<br>
+					<br>
+					<a href="/quiz/{{.Id}}">
+					<button type="button">クイズを開始する</button>
+					</a>
+					<br><br>
+				</div>
+			</div>
+		</section>
     </div>
 </body>
 {{end}}
