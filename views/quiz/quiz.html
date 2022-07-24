@@ -42,9 +42,11 @@
                 </div>
             </div>
         </section>
-        <h2 id="area_Judge"></h2>
-        <div id="area_Next"></div>
-        <div id="area_AnswerTime"></div>
+        <selection id="answer_area">
+            <h2 id="area_Judge"></h2>
+            <div id="area_Next"></div>
+            <div id="area_AnswerTime"></div>
+        </selection>
     </div>
     <script>
         var StartQuiz_i= function (i) {
@@ -64,13 +66,18 @@
             for (let i = 1; i < 5; i++) {
                 var c = "<input type='button' class='btn btn-outline-primary btn-block' id='choice" + i + "' value='" + answers[i] + "' ";
                 c += "onclick='judge(UserAns=\"" + answers[i] + "\", ";
-                c += "StartTime="+StartTime+")'>";
+                c += "StartTime="+StartTime+");change("+i+");'>";
                 document.getElementById("area_choice"+i).innerHTML = c;
             }
             area_statement.innerHTML = q.statement;
             quiz_i++;
         }
 
+        var change= function (i) {
+            var selection_id="choice"+i;
+            var selection = document.getElementById(selection_id);
+            selection.style.background = "green";
+        }
         var judge = function(UserAns, StartTime){ 
             /* 
             ユーザが答えを入力または制限時間が来たときにその正誤判定を行う 
