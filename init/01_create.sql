@@ -35,7 +35,7 @@ INSERT INTO quizzes(room_id, statement, answer, choice1, choice2, choice3, choic
 VALUES(1, "変電所のスペルを答えよ 3-3", "substation", "substation", "life span", "rectify", "fluctuations");
 
 INSERT INTO rooms(title, subtitle, author, date, comment) 
-			VALUES("5400", "黒木さん", "broccoli", "2022/07/24", "後期期末試験");	
+			VALUES("5400", "黒木先生", "broccoli", "2022/07/24", "後期期末試験");	
 INSERT INTO quizzes(room_id, statement, answer, choice1, choice2, choice3, choice4)
 VALUES(2, "OSPFの正式名称 4-1", "Open Shortest Path First", "Open Start Protocol Fuck", "Open Short Protocol Friends", "Opening Sample Prototype Fast", "Open Shortest Path First");
 INSERT INTO quizzes(room_id, statement, answer, choice1, choice2, choice3, choice4)
