@@ -17,4 +17,5 @@ spec:
     spec:
       containers:
       - image: ubuntu:18.04
+        tty: true
         name: ubuntu
