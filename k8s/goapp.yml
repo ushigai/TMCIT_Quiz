@@ -19,7 +19,7 @@ spec:
       - image: shomaigu/zissyu:latest
         name: zissyu
         command: ["/bin/sh","-c"]
-        args: ["go run main.go"]
+        args: ["sleep 10 && go run main.go"]
         ports:
 
 ---
