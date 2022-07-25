@@ -19,26 +19,6 @@ spec:
       - image: shomaigu/zissyu:latest
         name: zissyu
         command: ["/bin/sh","-c"]
-        args: ["sleep 30 && go run main.go"]
+        args: ["go run main.go"]
         ports:
         - containerPort: 8080
-
----
-
-apiVersion: v1
-kind: Service
-metadata:
-  creationTimestamp: null
-  labels:
-    app: goapp
-  name: goapp
-  namespace: kobayakawake
-spec:
-  ports:
-  - port: 8080
-    protocol: TCP
-    targetPort: 8080
-  selector:
-    app: goapp
-  type: NodePort
-status:
