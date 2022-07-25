@@ -12,23 +12,22 @@
 
 		<!-- Theme used for syntax highlighted code -->
 		<link rel="stylesheet" href="plugin/highlight/monokai.css">
-		<!--ダサいから採用しないかも
 		<style type="text/css">
-			section { text-align: left; }
+			#shiftleft { text-align: left;  }
+			#shiftright { text-align: right;  }
 		</style>
-		-->
 	</head>
 	<body>
 		<div class="reveal">
 			<div class="slides">
 
-<section>
+<section data-transition="convex">
 	<h2>小早川研究室</h2>
-	<h5>井口、大竹、山本</h3>
+	<h5>井口/大竹/山本</h5>
 </section>
 
-<section>
-	<section data-markdown="">
+<section data-transition="convex">
+	<section data-markdown="" data-transition="convex">
 		### テーマ
 		### 四択クイズ
 	</section>
@@ -48,31 +47,31 @@
 
 </section>
 
-<section>
-	<section data-markdown="">
+<section data-transition="convex">
+	<section data-markdown="" data-transition="convex">
 	## 役割と担当
 	</section>
-	<section data-markdown="">
+	<section data-markdown="" data-transition="convex">
 		| 種類 | タスク | 概要 | 割当 |
 		| -------- | -------- | -------- | -------- |
 		| バックエンド|Docker-compose|docker-composeを用いて環境を構築|井口|
 		| バックエンド|Dockerfile|本番環境へデプロイの為|井口|
 	</section>
-	<section data-markdown="">
+	<section data-markdown="" data-transition="convex">
 		| 種類 | タスク | 概要 | 割当 |
 		| -------- | -------- | -------- | -------- |
 		| バックエンド| kubernetes | kubernetesへ移植 |井口|
 		| バックエンド| Goアプリ| アプリケーションの開発 |大竹|
 	</section>
-	<section data-markdown="">
+	<section data-markdown="" data-transition="convex">
 		| 種類 | タスク | 概要 | 割当 |
 		| -------- | -------- | -------- | -------- |
 		| フロントエンド| DB設計 | DBの設計 |大竹|
 		| デザイン| HTML,CSS | アプリの装飾 |山本|
 	</section>
 </section>
-<section>
-	<section data-markdown="">
+<section data-transition="convex">
+	<section data-markdown="" data-transition="convex">
 		### ヒヤリング
 		- 授業内にて使用できる
 		- ユーザは先生か生徒の2種類
@@ -80,23 +79,23 @@
 		- 問題を自分で作成できる
 		- ランキングの機能がある
 	</section>
-	<section data-markdown="">
+	<section data-markdown="" data-transition="convex">
 	### 授業内にて使用出来る
 	ノートＰＣ、スマホからアクセス
 	</section>
-	<section data-markdown="">
+	<section data-markdown="" data-transition="convex">
 	### アカウント管理
 	ユーザーアカウントの種類は”先生”か”生徒”
 	</section>
-	<section data-markdown="">
+	<section data-markdown="" data-transition="convex">
 	### 問題を自分で作成出来る
 	アカウント”先生”を選択で問題作成可能
 	</section>
-	<section data-markdown="">
+	<section data-markdown="" data-transition="convex">
 	### ランキング機能
 	モチベーション向上の為
 	</section>
-	<section data-markdown="">
+	<section data-markdown="" data-transition="convex">
 	```bash [1-2|3|4]
 	a = 
 	print("Hello world!")
@@ -106,20 +105,63 @@
 	</section>
 </section>
 
-<section>
-	<section data-markdown="">
+
+<section data-transition="convex">
+	<section data-markdown="" data-transition="convex">
 		## 技術スタック
 	</section>
-	<section data-markdown="">
-		#### 使用したソフトウェア
-		| ソフト | ミドルウェア |
+	<section data-markdown="" data-transition="convex">
+		| カテゴリー | 技術スタック |
 		| -------- | -------- |
-		| DB     | mariadb |
-		| アプリケーション|Go|
+		| Webフロント | HTML,CSS,JavaScript |
+		| バックエンド | Go(echo) |
+		| O/Rマッパ | gorm |
+		| データベース | MySQL |
+		| 環境構築 | Docker |
+		| コンテナオーケストレーションツール | Kubernetes |
+		| コード管理 | GitHub |
 	</section>
-	<section data-markdown="">
-	###### インフラアーキテクチャ図
-		![img](app.png)
+	<section data-markdown="" data-transition="convex">
+		#### インフラアーキテクチャ図
+		![infra_architecture](img/infra_architecture.png)
+	</section>
+</section>
+
+<section data-transition="convex">
+	<section><h2>機能一覧</h2></section>
+	<section data-markdown="" data-transition="convex">
+		[http://192.168.50.41/home](http://192.168.50.41/home)
+		![home](img/ushigai/home.png)
+	</section>
+	<section data-markdown="" data-transition="convex">
+		[http://192.168.50.41/lobby](http://192.168.50.41/lobby)
+		![home](img/ushigai/lobby.png)
+	</section>
+	<section data-markdown="" data-transition="convex">
+		[http://192.168.50.41/room](http://192.168.50.41/room)
+		![home](img/ushigai/room.png)
+	</section>
+	<section data-markdown="" data-transition="convex">
+		![home](img/ushigai/quiz1.png)
+	</section>
+	<section data-markdown="" data-transition="convex">
+		![home](img/ushigai/quiz_wrong.png)
+	</section>
+	<section data-markdown="" data-transition="convex">
+		![home](img/ushigai/quiz_correct.png)
+	</section>
+</section>
+
+<section data-transition="convex">
+	<section data-transition="convex"><h2>工夫した点</h2></section>
+	<section data-transition="convex">
+		## あーにゃ
+	</section>
+	<section data-transition="convex">
+		## a
+	</section>
+	<section data-transition="convex">
+		## b
 	</section>
 	<section data-markdown="">
 	### インフラ部分で苦労した点
@@ -132,14 +174,10 @@
 	</section>
 </section>
 
-<section data-markdown>
-	### 機能一覧
-	</section>
-
-<section data-markdown>
-### 反省点
-- アプリ自体の作成までに時間がかかった
-- デザインが出来る人材がいなかった
+<section data-transition="convex">
+	<section><h2>反省点</h2></section>
+	<section><h4>アプリ完成までの時間</h4><img src="./img/ushigai/git_22ago.png"></section>
+	<section><img src="./img/ushigai/git_wip.png"></section>
 </section>
 
 
