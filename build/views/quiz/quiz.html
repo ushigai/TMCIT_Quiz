@@ -18,7 +18,7 @@
             <ul>
 		<li><a href="/home">Home</a></li>
                 <li><a href="/lobby">Lobby</a></li>
-                <li><a href="/">Quiz</a></li>
+                <li><a href="/">Quizu</a></li>
                 <li><a href="/">FAQs</a></li>
                 <li><a href="/login"></a></li>
             </ul>
@@ -42,46 +42,35 @@
                 </div>
             </div>
         </section>
-        <br>
-        <selection>
-            <div id="area_Judge"></div>
-            <div id="area_Answer"></div>
-            <div id="area_Next"></div>
-            <div id="area_AnswerTime"></div>
-        </selection>
+        <h2 id="area_Judge"></h2>
+        <div id="area_Next"></div>
+        <div id="area_AnswerTime"></div>
     </div>
     <script>
         var StartQuiz_i= function (i) {
             /* i回目のqiuzのスタート 
             ↓ のコードのっぺりでウケてる
             */
-            
             area_Judge.innerHTML = "";
             area_Next.innerHTML = "";
             area_AnswerTime.innerHTML = "";
-            area_Answer.innerHTML = "";
 
             var q = Quiz[i];
             var answers = [q.choice1, q.choice2, q.choice3, q.choice4];
-            CorrectAns = Quiz[i].answer;
+
             shuffle(answers);
             answers.unshift(0);
             var StartTime = performance.now();
             for (let i = 1; i < 5; i++) {
                 var c = "<input type='button' class='btn btn-outline-primary btn-block' id='choice" + i + "' value='" + answers[i] + "' ";
                 c += "onclick='judge(UserAns=\"" + answers[i] + "\", ";
-                c += "StartTime="+StartTime+");change("+i+");'>";
+                c += "StartTime="+StartTime+")'>";
                 document.getElementById("area_choice"+i).innerHTML = c;
             }
             area_statement.innerHTML = q.statement;
             quiz_i++;
         }
 
-        var change= function (i) {
-            var selection_id="choice"+i;
-            var selection = document.getElementById(selection_id);
-            selection.style.background = "#89c0fa";
-        }
         var judge = function(UserAns, StartTime){ 
             /* 
             ユーザが答えを入力または制限時間が来たときにその正誤判定を行う 
@@ -108,7 +97,6 @@
                     area_Judge.innerHTML = "<h3>Wrong answer!!!</h3>"
                     break;
             }
-            area_Answer.innerHTML="<h3>正解:"+CorrectAns+"</h3>";
             area_AnswerTime.innerHTML = "回答時間：" + Math.round((performance.now() - StartTime) / 100) / 10 + " 秒";
             if (quiz_i == quiz_N) {
                 area_Next.innerHTML = "<h3>おわおわり</h3>";

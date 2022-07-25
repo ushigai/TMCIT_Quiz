@@ -5,7 +5,6 @@ import (
 	"html/template"
 	"io"
 	"net/http"
-	"strconv"
 	"time"
 
 	_ "github.com/go-sql-driver/mysql"
@@ -79,35 +78,9 @@ func GetRoom(c echo.Context) error {
 	return c.Render(http.StatusOK, "lobby", rooms)
 }
 
-func DeleteQuiz(c echo.Context) error {
-	db := sqlConnect()
-	n := c.Param("ID")
-	id, err := strconv.Atoi(n)
-	if err != nil {
-		panic(err)
-	}
-	var quiz Quiz
-	db.First(&quiz, id)
-	db.Delete(&quiz)
-	defer db.Close()
-	return c.JSON(http.StatusCreated, quiz)
-}
-
-func CreateQuiz(c echo.Context) error {
-	db := sqlConnect()
-	quiz := Quiz{}
-	if err := c.Bind(&quiz); err != nil {
-		return err
-	}
-	db.Create(&quiz)
-	defer db.Close()
-	fmt.Println(quiz)
-	return c.JSON(http.StatusCreated, quiz)
-}
-
 func main() {
 	for i := 0; i < 30; i++ {
-		time.Sleep(time.Second * 1)
+        time.Sleep(time.Second * 1)
 	}
 	db := sqlConnect()
 	db.AutoMigrate(&User{})
@@ -150,8 +123,6 @@ func main() {
 
 	e.Static("/css", "./views/css")
 	e.Static("/image", "./views/image")
-	e.POST("/create", CreateQuiz)
-	e.DELETE("/users/:ID", DeleteQuiz)
 
 	e.Logger.Fatal(e.Start(":8080"))
 }
@@ -161,7 +132,7 @@ func sqlConnect() (database *gorm.DB) {
 	//if err != nil {
 	//	panic(err.Error())
 	//}
-
+	
 	//USER := os.Getenv("DB_USER")
 	//PASS := os.Getenv("DB_PASSWORD")
 	//DBNAME := os.Getenv("DB_NAME")
@@ -170,6 +141,8 @@ func sqlConnect() (database *gorm.DB) {
 	PASS := "tmcit"
 	DBNAME := "tmcit_quiz_database"
 
+	
+	
 	DBMS := "mysql"
 	PROTOCOL := "tcp(db:3306)"
 	CONNECT := USER + ":" + PASS + "@" + PROTOCOL + "/" + DBNAME + "?charset=utf8&parseTime=true&loc=Asia%2FTokyo"
@@ -182,7 +155,7 @@ func sqlConnect() (database *gorm.DB) {
 
 	db, err := gorm.Open(DBMS, CONNECT)
 	if err != nil {
-		fmt.Println("DB接続失敗🤪🤪🤪")
+		panic("DB接続失敗🤪🤪🤪")
 	} else {
 		fmt.Println("やったね😊")
 	}
