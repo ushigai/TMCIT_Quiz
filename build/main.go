@@ -182,7 +182,7 @@ func sqlConnect() (database *gorm.DB) {
 
 	db, err := gorm.Open(DBMS, CONNECT)
 	if err != nil {
-		panic("DB接続失敗🤪🤪🤪")
+		fmt.Println("DB接続失敗🤪🤪🤪")
 	} else {
 		fmt.Println("やったね😊")
 	}
