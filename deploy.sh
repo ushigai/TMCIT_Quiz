@@ -1,6 +1,8 @@
 #!/bin/bash
 git checkout shoma
 git pull
+docker build -t shomaigu/zissyu_db:latest /home/pi/go_app/hon/TMCIT_Quiz/db/
+docker image push shomaigu/zissyu_db:latest
 docker build -t shomaigu/zissyu:latest /home/pi/go_app/hon/TMCIT_Quiz/build/
 docker image push shomaigu/zissyu:latest
 sleep 10
