@@ -31,13 +31,13 @@
 		### テーマ
 		### 四択クイズ
 	</section>
-	<section data-markdown="">
+	<section data-markdown="" data-transition="convex">
 		### yayyay四択クイズでshow!!!!
 	</section>
-	<section data-markdown="">
+	<section data-markdown="" data-transition="convex">
 		### 稼働場所
-		- Nodeport 30005
-		- curl 192.168.50.50:30005/home（例
+		- Nodeport 32393
+		- [http://192.168.50.50:32393/home](http://192.168.50.50:32393/home)
 	</section>
 
 </section>
@@ -47,22 +47,29 @@
 	## 役割と担当
 	</section>
 	<section data-markdown="" data-transition="convex">
-		| 種類 | タスク | 概要 | 割当 |
-		| -------- | -------- | -------- | -------- |
-		| バックエンド|Docker-compose|docker-composeを用いて環境を構築|井口|
-		| バックエンド|Dockerfile|本番環境へデプロイの為|井口|
+		### フロントエンド
+		- 担当者
+			- 山本, 大竹
+		- タスク
+			- HTML,CSSでのWebデザイン
+			- JSでのクイズエンジンの作成
 	</section>
 	<section data-markdown="" data-transition="convex">
-		| 種類 | タスク | 概要 | 割当 |
-		| -------- | -------- | -------- | -------- |
-		| バックエンド| kubernetes | kubernetesへ移植 |井口|
-		| バックエンド| Goアプリ| アプリケーションの開発 |大竹|
+		### バックエンド
+		- 担当者
+			- 大竹, 井口
+		- タスク
+			- echoでのRouting,templateの定義
+			- gormを使用したCRUD開発
+			- DBの設計
 	</section>
 	<section data-markdown="" data-transition="convex">
-		| 種類 | タスク | 概要 | 割当 |
-		| -------- | -------- | -------- | -------- |
-		| フロントエンド| DB設計 | DBの設計 |大竹|
-		| デザイン| HTML,CSS | アプリの装飾 |山本|
+		### インフラ
+		- 担当者
+			- 井口, 大竹
+		- タスク
+			- Dockerを使用したサービスのコンテナ化
+			- kubernetesへのdeploy
 	</section>
 </section>
 <section data-transition="convex">
@@ -161,9 +168,9 @@
 </section>
 
 <section data-transition="convex">
-	<section><h2>反省点</h2></section>
-	<section><h4>アプリ完成までの時間</h4><img src="./img/ushigai/git_22ago.png"></section>
-	<section><img src="./img/ushigai/git_wip.png"></section>
+	<section data-transition="convex"><h2>反省点</h2></section>
+	<section data-transition="convex"><h4>アプリ完成までの時間</h4><img src="./img/ushigai/git_22ago.png"></section>
+	<section data-transition="convex"><img src="./img/ushigai/git_wip.png"></section>
 </section>
 
 
