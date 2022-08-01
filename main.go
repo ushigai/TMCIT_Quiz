@@ -86,11 +86,11 @@ func DeleteQuiz(c echo.Context) error {
 	if err != nil {
 		panic(err)
 	}
-	var quiz Quiz
-	db.First(&quiz, id)
-	db.Delete(&quiz)
+	var room Room
+	db.First(&room, id)
+	db.Delete(&room)
 	defer db.Close()
-	return c.JSON(http.StatusCreated, quiz)
+	return c.JSON(http.StatusCreated, room)
 }
 
 func CreateQuiz(c echo.Context) error {
