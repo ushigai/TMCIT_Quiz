@@ -13,12 +13,6 @@ import (
 	"github.com/labstack/echo"
 )
 
-type User struct {
-	Id    int    `json:"id" param:"id"`
-	Name  string `json:"name"`
-	Email string `json:"email"`
-}
-
 type Template struct {
 	templates *template.Template
 }
@@ -86,31 +80,37 @@ func DeleteQuiz(c echo.Context) error {
 	if err != nil {
 		panic(err)
 	}
-	var quiz Quiz
-	db.First(&quiz, id)
-	db.Delete(&quiz)
+	var room Room
+	db.First(&room, id)
+	db.Delete(&room)
 	defer db.Close()
-	return c.JSON(http.StatusCreated, quiz)
+	return c.JSON(http.StatusCreated, room)
 }
 
-func CreateQuiz(c echo.Context) error {
+func CreateRoom(c echo.Context) error {
 	db := sqlConnect()
-	quiz := Quiz{}
-	if err := c.Bind(&quiz); err != nil {
+	room := Room{
+		Title:    "日本語検定",
+		Subtitle: "4級",
+		Author:   "ushigai",
+		Date:     "2022/07/20",
+		Comment:  "USA",
+	}
+	if err := c.Bind(&room); err != nil {
 		return err
 	}
-	db.Create(&quiz)
+	db.Create(&room)
 	defer db.Close()
-	fmt.Println(quiz)
-	return c.JSON(http.StatusCreated, quiz)
+	fmt.Println(room)
+	return c.JSON(http.StatusCreated, room)
 }
 
 func main() {
-	for i := 0; i < 30; i++ {
+	for i := 0; i < 15; i++ {
 		time.Sleep(time.Second * 1)
 	}
 	db := sqlConnect()
-	db.AutoMigrate(&User{})
+	db.AutoMigrate(&Quiz{})
 	defer db.Close()
 
 	e := echo.New()
@@ -150,8 +150,8 @@ func main() {
 
 	e.Static("/css", "./views/css")
 	e.Static("/image", "./views/image")
-	e.POST("/create", CreateQuiz)
-	e.DELETE("/users/:ID", DeleteQuiz)
+	e.POST("/createroom", CreateRoom)
+	e.DELETE("/delquiz/:ID", DeleteQuiz)
 
 	e.Logger.Fatal(e.Start(":8080"))
 }
