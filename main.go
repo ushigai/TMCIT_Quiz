@@ -87,20 +87,26 @@ func DeleteQuiz(c echo.Context) error {
 	return c.JSON(http.StatusCreated, room)
 }
 
-func CreateQuiz(c echo.Context) error {
+func CreateRoom(c echo.Context) error {
 	db := sqlConnect()
-	quiz := Quiz{}
-	if err := c.Bind(&quiz); err != nil {
+	room := Room{
+		Title:    "日本語検定",
+		Subtitle: "4級",
+		Author:   "ushigai",
+		Date:     "2022/07/20",
+		Comment:  "USA",
+	}
+	if err := c.Bind(&room); err != nil {
 		return err
 	}
-	db.Create(&quiz)
+	db.Create(&room)
 	defer db.Close()
-	fmt.Println(quiz)
-	return c.JSON(http.StatusCreated, quiz)
+	fmt.Println(room)
+	return c.JSON(http.StatusCreated, room)
 }
 
 func main() {
-	for i := 0; i < 30; i++ {
+	for i := 0; i < 15; i++ {
 		time.Sleep(time.Second * 1)
 	}
 	db := sqlConnect()
@@ -144,7 +150,7 @@ func main() {
 
 	e.Static("/css", "./views/css")
 	e.Static("/image", "./views/image")
-	e.POST("/create", CreateQuiz)
+	e.POST("/createroom", CreateRoom)
 	e.DELETE("/delquiz/:ID", DeleteQuiz)
 
 	e.Logger.Fatal(e.Start(":8080"))
